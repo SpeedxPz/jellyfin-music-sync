@@ -84,14 +84,32 @@
 
 ## Traceability
 
-*(Filled by roadmapper)*
-
-| REQ-ID | Phase |
-|--------|-------|
-| AUTH-01–04 | — |
-| LIB-01–04 | — |
-| SYNC-01–07 | — |
-| M3U8-01–03 | — |
-| PROG-01–02 | — |
-| POST-01–04 | — |
-| SET-01–03 | — |
+| REQ-ID | Phase | Status |
+|--------|-------|--------|
+| SET-01 | Phase 1: Foundation | Pending |
+| SET-02 | Phase 1: Foundation | Pending |
+| SET-03 | Phase 1: Foundation | Pending |
+| AUTH-01 | Phase 2: Jellyfin Connection | Pending |
+| AUTH-02 | Phase 2: Jellyfin Connection | Pending |
+| AUTH-03 | Phase 2: Jellyfin Connection | Pending |
+| AUTH-04 | Phase 2: Jellyfin Connection | Pending |
+| LIB-01 | Phase 2: Jellyfin Connection | Pending |
+| LIB-02 | Phase 2: Jellyfin Connection | Pending |
+| LIB-03 | Phase 2: Jellyfin Connection | Pending |
+| LIB-04 | Phase 2: Jellyfin Connection | Pending |
+| SYNC-01 | Phase 3: Sync Engine | Pending |
+| SYNC-02 | Phase 3: Sync Engine | Pending |
+| SYNC-03 | Phase 3: Sync Engine | Pending |
+| SYNC-04 | Phase 3: Sync Engine | Pending |
+| SYNC-05 | Phase 3: Sync Engine | Pending |
+| SYNC-06 | Phase 3: Sync Engine | Pending |
+| SYNC-07 | Phase 3: Sync Engine | Pending |
+| M3U8-01 | Phase 3: Sync Engine | Pending |
+| M3U8-02 | Phase 3: Sync Engine | Pending |
+| M3U8-03 | Phase 3: Sync Engine | Pending |
+| PROG-01 | Phase 4: UI & Feedback | Pending |
+| PROG-02 | Phase 4: UI & Feedback | Pending |
+| POST-01 | Phase 4: UI & Feedback | Pending |
+| POST-02 | Phase 4: UI & Feedback | Pending |
+| POST-03 | Phase 4: UI & Feedback | Pending |
+| POST-04 | Phase 4: UI & Feedback | Pending |
