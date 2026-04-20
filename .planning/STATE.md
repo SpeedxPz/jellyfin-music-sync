@@ -9,29 +9,30 @@ See: .planning/PROJECT.md (updated 2026-04-19)
 
 ## Current Position
 
-Phase: 1 of 4 (Foundation) — COMPLETE
-Plan: 5 of 5 in current phase
-Status: Phase 1 complete — verified
-Last activity: 2026-04-20 — Phase 1 verified (5/5 must-haves, SET-01/SET-02/SET-03 satisfied)
+Phase: 2 of 4 (Jellyfin Connection) — IN PROGRESS
+Plan: 1 of 4 in current phase
+Status: Phase 2 executing — 4 plans across 4 waves
+Last activity: 2026-04-20 — Phase 2 Plan 01 complete
 
-Progress: [██░░░░░░░░] 25%
+Progress: [███░░░░░░░] 31%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: 9 min
-- Total execution time: ~0.75 hours
+- Total plans completed: 6
+- Average duration: 8 min
+- Total execution time: ~0.82 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1 (Foundation) | 5 | 51 min | 10 min |
+| 2 (Jellyfin Connection) | 1 | 4 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 11 min (01-01), 5 min (01-02), 12 min (01-03), 8 min (01-05), 15 min (01-04)
-- Trend: Fast (TDD + implementation + human-verify)
+- Last 5 plans: 5 min (01-02), 12 min (01-03), 8 min (01-05), 15 min (01-04), 4 min (02-01)
+- Trend: Fast
 
 *Updated after each plan completion*
 
@@ -55,6 +56,9 @@ Recent decisions affecting current work:
 - 01-03: sanitize-filename replaces trailing spaces with '_' on Windows — pre-trim input with trimEnd() before sanitization
 - 01-03: stubs.ts registers 6 channels via loop (1 ipcMain.handle literal) — functionally correct; D-06 throw behavior verified
 - 01-04: electron-conf schema required array removed — defaults alone ensure field presence; required causes init error on fresh config before defaults are applied
+- 02-01: @jellyfin/sdk subpath imports via lib/utils/api/* (no exports map; verified by file inspection + node require test)
+- 02-01: store.ts schema uses `as any` cast to bypass ajv JSONSchemaType required constraint without violating D-01
+- 02-01: @jellyfin/sdk excluded from electron-vite externalizeDeps so Vite bundles it as CJS (prevents ERR_REQUIRE_ESM)
 
 ### Pending Todos
 
@@ -75,5 +79,5 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-04-20
-Stopped at: Phase 2 discussion complete — 02-CONTEXT.md written, ready for /gsd-plan-phase 2
+Stopped at: Completed 02-01-PLAN.md — SDK install, ESM fix, types/store extended, jellyfin.ts wrapper created
 Resume file: None

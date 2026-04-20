@@ -39,17 +39,22 @@ Plans:
 - [x] 01-05-PLAN.md — Unit tests: sanitizePathSegment, atomicWriteJson, safeReadJson
 
 ### Phase 2: Jellyfin Connection
-**Goal**: Users can authenticate against a Jellyfin server, browse their playlists with track counts and size estimates, and their session persists across app restarts
+**Goal**: Users can authenticate against a Jellyfin server, browse their playlists with track counts, and their session persists across app restarts
 **Depends on**: Phase 1
-**Requirements**: AUTH-01, AUTH-02, AUTH-03, AUTH-04, LIB-01, LIB-02, LIB-03, LIB-04
+**Requirements**: AUTH-01, AUTH-02, AUTH-03, AUTH-04, LIB-01, LIB-03, LIB-04
 **Success Criteria** (what must be TRUE):
   1. User can enter a server URL and credentials; app validates reachability before attempting login
   2. Auth token is stored via `safeStorage` and the user is still logged in after closing and reopening the app
   3. User can log out, clearing all stored credentials and revoking the server session
-  4. User can see all their Jellyfin playlists with track counts and estimated download sizes, and filter the list by name
+  4. User can see all their Jellyfin playlists with track counts, and filter the list by name
   5. User can select multiple playlists from the list before initiating a sync
-**Plans**: TBD
-**UI hint**: yes
+**Plans**: 4 plans
+
+Plans:
+- [x] 02-01-PLAN.md — Install deps, fix ESM build config, extend types/store, create jellyfin.ts SDK wrapper
+- [ ] 02-02-PLAN.md — Main process IPC handlers: auth.ts + playlists.ts, remove Phase 2 stubs, wire index.ts
+- [ ] 02-03-PLAN.md — Renderer: Zustand auth store, LoginScreen, App.tsx screen router
+- [ ] 02-04-PLAN.md — Renderer: PlaylistBrowserScreen with filter, multi-select, logout, Linux warning banner
 
 ### Phase 3: Sync Engine
 **Goal**: Selected playlists are fully downloaded to the destination in Artist/Album/Track structure with M3U8 files, subsequent runs are incremental, duplicate tracks are stored once, and orphaned tracks are removed
@@ -83,6 +88,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-04-20 |
-| 2. Jellyfin Connection | 0/TBD | Not started | - |
+| 2. Jellyfin Connection | 1/4 | In Progress | - |
 | 3. Sync Engine | 0/TBD | Not started | - |
 | 4. UI & Feedback | 0/TBD | Not started | - |
