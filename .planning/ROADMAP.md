@@ -13,7 +13,7 @@ Starting from a blank Electron project, four phases build the app from the insid
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Electron scaffold, typed IPC surface, filesystem utilities, and app settings store
-- [ ] **Phase 2: Jellyfin Connection** - Auth flow and library browsing wired end-to-end against a real server
+- [x] **Phase 2: Jellyfin Connection** - Auth flow and library browsing wired end-to-end against a real server
 - [ ] **Phase 3: Sync Engine** - Download queue, incremental sync, deduplication, and M3U8 generation
 - [ ] **Phase 4: UI & Feedback** - Wired React UI with live progress, cancel, post-sync summary, and packaged builds
 
@@ -54,7 +54,7 @@ Plans:
 - [x] 02-01-PLAN.md — Install deps, fix ESM build config, extend types/store, create jellyfin.ts SDK wrapper
 - [x] 02-02-PLAN.md — Main process IPC handlers: auth.ts + playlists.ts, remove Phase 2 stubs, wire index.ts
 - [x] 02-03-PLAN.md — Renderer: Zustand auth store, LoginScreen, App.tsx screen router
-- [ ] 02-04-PLAN.md — Renderer: PlaylistBrowserScreen with filter, multi-select, logout, Linux warning banner
+- [x] 02-04-PLAN.md — Renderer: PlaylistBrowserScreen with filter, multi-select, logout, Linux warning banner
 
 ### Phase 3: Sync Engine
 **Goal**: Selected playlists are fully downloaded to the destination in Artist/Album/Track structure with M3U8 files, subsequent runs are incremental, duplicate tracks are stored once, and orphaned tracks are removed
@@ -88,6 +88,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-04-20 |
-| 2. Jellyfin Connection | 3/4 | In Progress|  |
+| 2. Jellyfin Connection | 4/4 | Complete | 2026-04-20 |
 | 3. Sync Engine | 0/TBD | Not started | - |
 | 4. UI & Feedback | 0/TBD | Not started | - |
