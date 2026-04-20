@@ -126,6 +126,19 @@ export function registerAuthHandlers(): void {
         const api = createJellyfinApi(serverUrl)
         api.accessToken = token
 
+        // Cheap authenticated ping — validates token is still live on the server (CR-01).
+        try {
+          await getUserApi(api).getCurrentUser()
+        } catch (pingErr) {
+          if (isAxiosError(pingErr) && pingErr.response?.status === 401) {
+            log('WARN', 'auth:getStatus: stored token rejected by server (401) — clearing credentials')
+            store.set({ serverUrl: '', userId: '', encryptedToken: '', displayName: '', serverName: '' })
+            return { connected: false }
+          }
+          // Network unreachable: keep credentials, return connected: false without wiping store
+          return { connected: false }
+        }
+
         return {
           connected: true,
           serverName: store.get('serverName'),
