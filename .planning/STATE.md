@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-04-19)
 ## Current Position
 
 Phase: 1 of 4 (Foundation)
-Plan: 1 of 5 in current phase
+Plan: 2 of 5 in current phase
 Status: Executing
-Last activity: 2026-04-20 — Plan 01-01 complete (scaffold + IPC types)
+Last activity: 2026-04-20 — Plan 01-02 complete (preload contextBridge wiring)
 
-Progress: [█░░░░░░░░░] 5%
+Progress: [██░░░░░░░░] 10%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 11 min
-- Total execution time: 0.2 hours
+- Total plans completed: 2
+- Average duration: 8 min
+- Total execution time: 0.3 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 (Foundation) | 1 | 11 min | 11 min |
+| 1 (Foundation) | 2 | 16 min | 8 min |
 
 **Recent Trend:**
-- Last 5 plans: 11 min (01-01)
-- Trend: Baseline established
+- Last 5 plans: 11 min (01-01), 5 min (01-02)
+- Trend: Fast (simple wiring task)
 
 *Updated after each plan completion*
 
@@ -48,6 +48,8 @@ Recent decisions affecting current work:
 - 01-01: electron-conf replaces electron-store — electron-store v9+ is ESM-only, causes ERR_REQUIRE_ESM in electron-vite CJS main process; electron-conf (by electron-vite author) is the ecosystem-standard replacement
 - 01-01: tsconfig.node.json includes shared/**/* for ipc-types.ts resolution from main and preload contexts
 - 01-01: electron.vite.config.ts uses build.externalizeDeps config (not externalizeDepsPlugin — deprecated in electron-vite 5)
+- 01-02: Replaced scaffold @electron-toolkit/preload with direct contextBridge + ipcRenderer — typed wrapper is canonical, toolkit helper not required
+- 01-02: sync.cancel uses ipcRenderer.send (fire-and-forget); all 8 other channels use ipcRenderer.invoke
 
 ### Pending Todos
 
@@ -69,5 +71,5 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-04-20
-Stopped at: Plan 01-01 complete — scaffold, Tailwind v4, IPC types; ready for Plan 01-02
+Stopped at: Plan 01-02 complete — preload contextBridge wiring; ready for Plan 01-03
 Resume file: None
