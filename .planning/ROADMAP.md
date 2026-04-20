@@ -12,7 +12,7 @@ Starting from a blank Electron project, four phases build the app from the insid
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Electron scaffold, typed IPC surface, filesystem utilities, and app settings store
+- [x] **Phase 1: Foundation** - Electron scaffold, typed IPC surface, filesystem utilities, and app settings store
 - [ ] **Phase 2: Jellyfin Connection** - Auth flow and library browsing wired end-to-end against a real server
 - [ ] **Phase 3: Sync Engine** - Download queue, incremental sync, deduplication, and M3U8 generation
 - [ ] **Phase 4: UI & Feedback** - Wired React UI with live progress, cancel, post-sync summary, and packaged builds
@@ -35,7 +35,7 @@ Plans:
 - [x] 01-01-PLAN.md — Electron scaffold, Tailwind v4, electron-conf install, shared/ipc-types.ts
 - [x] 01-02-PLAN.md — Preload contextBridge wiring (full ElectronAPI surface)
 - [x] 01-03-PLAN.md — Main process: store, logger, fs-utils, IPC handlers, stubs
-- [ ] 01-04-PLAN.md — Dev panel UI (React, wired to settings IPC, human verify)
+- [x] 01-04-PLAN.md — Dev panel UI (React, wired to settings IPC, human verify)
 - [x] 01-05-PLAN.md — Unit tests: sanitizePathSegment, atomicWriteJson, safeReadJson
 
 ### Phase 2: Jellyfin Connection
@@ -82,7 +82,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 4/5 | Executing | - |
+| 1. Foundation | 5/5 | Complete | 2026-04-20 |
 | 2. Jellyfin Connection | 0/TBD | Not started | - |
 | 3. Sync Engine | 0/TBD | Not started | - |
 | 4. UI & Feedback | 0/TBD | Not started | - |

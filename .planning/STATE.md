@@ -12,26 +12,26 @@ See: .planning/PROJECT.md (updated 2026-04-19)
 Phase: 1 of 4 (Foundation)
 Plan: 5 of 5 in current phase
 Status: Executing
-Last activity: 2026-04-20 — Plan 01-05 complete (FAT32 unit tests — 13 tests passing)
+Last activity: 2026-04-20 — Plan 01-04 complete (DevPanel UI — human-verified IPC stack end-to-end)
 
 Progress: [████░░░░░░] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 8 min
-- Total execution time: 0.5 hours
+- Total plans completed: 5
+- Average duration: 9 min
+- Total execution time: ~0.75 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 (Foundation) | 4 | 36 min | 9 min |
+| 1 (Foundation) | 5 | 51 min | 10 min |
 
 **Recent Trend:**
-- Last 5 plans: 11 min (01-01), 5 min (01-02), 12 min (01-03), 8 min (01-05)
-- Trend: Fast (TDD + implementation)
+- Last 5 plans: 11 min (01-01), 5 min (01-02), 12 min (01-03), 8 min (01-05), 15 min (01-04)
+- Trend: Fast (TDD + implementation + human-verify)
 
 *Updated after each plan completion*
 
@@ -53,6 +53,7 @@ Recent decisions affecting current work:
 - 01-03: electron-conf import path must be 'electron-conf/main' (not bare) for CJS main process context
 - 01-03: sanitize-filename replaces trailing spaces with '_' on Windows — pre-trim input with trimEnd() before sanitization
 - 01-03: stubs.ts registers 6 channels via loop (1 ipcMain.handle literal) — functionally correct; D-06 throw behavior verified
+- 01-04: electron-conf schema required array removed — defaults alone ensure field presence; required causes init error on fresh config before defaults are applied
 
 ### Pending Todos
 
@@ -74,5 +75,5 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-04-20
-Stopped at: Plan 01-05 complete — FAT32 unit tests (13 passing); ready for Plan 01-04 (dev panel UI)
+Stopped at: Plan 01-04 complete — DevPanel UI human-verified; all Phase 1 plans complete
 Resume file: None
