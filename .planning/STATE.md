@@ -97,5 +97,5 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-04-21
-Stopped at: Phase 2 verified and approved — human sign-off complete; ready for /gsd-discuss-phase 3
-Resume file: None
+Stopped at: Phase 3 context gathered — sync engine decisions locked, ready for /gsd-plan-phase 3
+Resume file: .planning/phases/03-sync-engine/03-CONTEXT.md
