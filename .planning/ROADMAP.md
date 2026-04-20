@@ -29,7 +29,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Atomic manifest read/write survives a simulated crash (write-to-tmp, rename) without corruption
   4. App remembers the last destination folder and concurrent download setting across restarts
   5. Debug log file is written to a known location and captures startup events
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [x] 01-01-PLAN.md — Electron scaffold, Tailwind v4, electron-conf install, shared/ipc-types.ts
+- [ ] 01-02-PLAN.md — Preload contextBridge wiring (full ElectronAPI surface)
+- [ ] 01-03-PLAN.md — Main process: store, logger, fs-utils, IPC handlers, stubs
+- [ ] 01-04-PLAN.md — Dev panel UI (React, wired to settings IPC, human verify)
+- [ ] 01-05-PLAN.md — Unit tests: sanitizePathSegment, atomicWriteJson, safeReadJson
 
 ### Phase 2: Jellyfin Connection
 **Goal**: Users can authenticate against a Jellyfin server, browse their playlists with track counts and size estimates, and their session persists across app restarts
@@ -75,7 +82,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 1/5 | Executing | - |
 | 2. Jellyfin Connection | 0/TBD | Not started | - |
 | 3. Sync Engine | 0/TBD | Not started | - |
 | 4. UI & Feedback | 0/TBD | Not started | - |

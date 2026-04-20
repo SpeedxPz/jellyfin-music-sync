@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-04-19)
 ## Current Position
 
 Phase: 1 of 4 (Foundation)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-04-19 — Roadmap created, all 27 v1 requirements mapped across 4 phases
+Plan: 1 of 5 in current phase
+Status: Executing
+Last activity: 2026-04-20 — Plan 01-01 complete (scaffold + IPC types)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 5%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: 11 min
+- Total execution time: 0.2 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 1 (Foundation) | 1 | 11 min | 11 min |
 
 **Recent Trend:**
-- Last 5 plans: —
-- Trend: —
+- Last 5 plans: 11 min (01-01)
+- Trend: Baseline established
 
 *Updated after each plan completion*
 
@@ -45,6 +45,9 @@ Recent decisions affecting current work:
 - Setup: Use Electron 41 + electron-vite + TypeScript — all I/O in main process, renderer is display-only
 - Setup: Use @jellyfin/sdk 0.13.0 (not deprecated jellyfin-apiclient)
 - Setup: safeStorage for token persistence; need fallback strategy for headless Linux (open question)
+- 01-01: electron-conf replaces electron-store — electron-store v9+ is ESM-only, causes ERR_REQUIRE_ESM in electron-vite CJS main process; electron-conf (by electron-vite author) is the ecosystem-standard replacement
+- 01-01: tsconfig.node.json includes shared/**/* for ipc-types.ts resolution from main and preload contexts
+- 01-01: electron.vite.config.ts uses build.externalizeDeps config (not externalizeDepsPlugin — deprecated in electron-vite 5)
 
 ### Pending Todos
 
@@ -65,6 +68,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-04-19
-Stopped at: Roadmap written; ready to plan Phase 1
+Last session: 2026-04-20
+Stopped at: Plan 01-01 complete — scaffold, Tailwind v4, IPC types; ready for Plan 01-02
 Resume file: None
