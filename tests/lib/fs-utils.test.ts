@@ -75,4 +75,11 @@ describe('atomicWriteJson / safeReadJson', () => {
     atomicWriteJson(filePath, { ok: true })
     expect(safeReadJson(filePath, null)).toEqual({ ok: true })
   })
+
+  it('does not leave .tmp file after successful write', () => {
+    const { existsSync } = require('fs')
+    const filePath = join(tmpDir, 'data.json')
+    atomicWriteJson(filePath, { x: 1 })
+    expect(existsSync(`${filePath}.tmp`)).toBe(false)
+  })
 })
