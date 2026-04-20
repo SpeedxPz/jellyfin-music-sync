@@ -2,6 +2,8 @@ import { app, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { registerSettingsHandlers } from './ipc/settings'
+import { registerAuthHandlers } from './ipc/auth'
+import { registerPlaylistHandlers } from './ipc/playlists'
 import { registerStubs } from './ipc/stubs'
 import { log } from './lib/logger'
 
@@ -43,7 +45,9 @@ app.whenReady().then(() => {
   })
 
   registerSettingsHandlers()
-  registerStubs()
+  registerAuthHandlers()      // AUTH-01, AUTH-02, AUTH-03, AUTH-04
+  registerPlaylistHandlers()  // LIB-01: sync:getPlaylists
+  registerStubs()             // Phase 3 stubs only (Phase 2 channels removed from stubs.ts)
   log('INFO', 'App started')
   createWindow()
 
