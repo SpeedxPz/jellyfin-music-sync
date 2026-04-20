@@ -17,6 +17,10 @@ export default function LoginScreen() {
   const handleConnect = async () => {
     setError(null)
     setReachableText(null)
+    // WR-04: Validate fields before hitting the network so the error message is accurate.
+    if (!url.trim()) { setError('Server URL is required.'); return }
+    if (!username.trim()) { setError('Username is required.'); return }
+    if (!password) { setError('Password is required.'); return }
     setLoading(true)
     try {
       const result = await window.electronAPI.auth.login(url.trim(), username.trim(), password)
