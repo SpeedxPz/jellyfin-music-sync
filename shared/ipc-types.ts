@@ -9,6 +9,11 @@
 export interface Settings {
   lastDestination: string       // SET-01: remembered destination folder; default ''
   concurrentDownloads: number   // SET-02: 1–5 concurrent downloads; default 3 (D-04)
+  serverUrl: string             // Jellyfin server base URL; default ''
+  userId: string                // Jellyfin user ID from auth; default ''
+  encryptedToken: string        // base64-encoded encrypted token OR plaintext (Linux fallback); default ''
+  displayName: string           // Jellyfin user display name; default ''
+  serverName: string            // Jellyfin server name from PublicSystemInfo; default ''
 }
 
 export interface AuthResult {
@@ -16,6 +21,8 @@ export interface AuthResult {
   accessToken: string
   serverId: string
   serverName: string
+  displayName: string           // From AuthenticationResult.User.Name
+  linuxPlaintextWarning: boolean  // true when safeStorage unavailable on Linux (D-AUTH-LINUX)
 }
 
 export interface SyncOptions {
