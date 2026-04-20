@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-04-19)
 ## Current Position
 
 Phase: 1 of 4 (Foundation)
-Plan: 2 of 5 in current phase
+Plan: 3 of 5 in current phase
 Status: Executing
-Last activity: 2026-04-20 — Plan 01-02 complete (preload contextBridge wiring)
+Last activity: 2026-04-20 — Plan 01-03 complete (main process utilities and IPC handlers)
 
-Progress: [██░░░░░░░░] 10%
+Progress: [███░░░░░░░] 15%
 
 ## Performance Metrics
 
@@ -27,11 +27,11 @@ Progress: [██░░░░░░░░] 10%
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 (Foundation) | 2 | 16 min | 8 min |
+| 1 (Foundation) | 3 | 28 min | 9 min |
 
 **Recent Trend:**
-- Last 5 plans: 11 min (01-01), 5 min (01-02)
-- Trend: Fast (simple wiring task)
+- Last 5 plans: 11 min (01-01), 5 min (01-02), 12 min (01-03)
+- Trend: Fast (TDD + implementation)
 
 *Updated after each plan completion*
 
@@ -50,6 +50,9 @@ Recent decisions affecting current work:
 - 01-01: electron.vite.config.ts uses build.externalizeDeps config (not externalizeDepsPlugin — deprecated in electron-vite 5)
 - 01-02: Replaced scaffold @electron-toolkit/preload with direct contextBridge + ipcRenderer — typed wrapper is canonical, toolkit helper not required
 - 01-02: sync.cancel uses ipcRenderer.send (fire-and-forget); all 8 other channels use ipcRenderer.invoke
+- 01-03: electron-conf import path must be 'electron-conf/main' (not bare) for CJS main process context
+- 01-03: sanitize-filename replaces trailing spaces with '_' on Windows — pre-trim input with trimEnd() before sanitization
+- 01-03: stubs.ts registers 6 channels via loop (1 ipcMain.handle literal) — functionally correct; D-06 throw behavior verified
 
 ### Pending Todos
 
@@ -71,5 +74,5 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-04-20
-Stopped at: Plan 01-02 complete — preload contextBridge wiring; ready for Plan 01-03
+Stopped at: Plan 01-03 complete — main process utilities and IPC handlers; ready for Plan 01-04
 Resume file: None

@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 01-01-PLAN.md — Electron scaffold, Tailwind v4, electron-conf install, shared/ipc-types.ts
 - [x] 01-02-PLAN.md — Preload contextBridge wiring (full ElectronAPI surface)
-- [ ] 01-03-PLAN.md — Main process: store, logger, fs-utils, IPC handlers, stubs
+- [x] 01-03-PLAN.md — Main process: store, logger, fs-utils, IPC handlers, stubs
 - [ ] 01-04-PLAN.md — Dev panel UI (React, wired to settings IPC, human verify)
 - [ ] 01-05-PLAN.md — Unit tests: sanitizePathSegment, atomicWriteJson, safeReadJson
 
@@ -82,7 +82,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 2/5 | Executing | - |
+| 1. Foundation | 3/5 | Executing | - |
 | 2. Jellyfin Connection | 0/TBD | Not started | - |
 | 3. Sync Engine | 0/TBD | Not started | - |
 | 4. UI & Feedback | 0/TBD | Not started | - |
