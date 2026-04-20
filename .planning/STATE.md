@@ -44,7 +44,8 @@ Recent decisions affecting current work:
 
 - Setup: Use Electron 41 + electron-vite + TypeScript — all I/O in main process, renderer is display-only
 - Setup: Use @jellyfin/sdk 0.13.0 (not deprecated jellyfin-apiclient)
-- Setup: safeStorage for token persistence; need fallback strategy for headless Linux (open question)
+- Setup: safeStorage for token persistence; Linux fallback decided: plaintext + in-app warning (D-AUTH-LINUX)
+- 02-discuss: Real login + playlist browser screens in Phase 2 (D-UI-SCOPE); track count only, no size estimate (D-SIZE-EST, D-LIB02-DEFER); reachability ping before login (D-SERVER-VALIDATE)
 - 01-01: electron-conf replaces electron-store — electron-store v9+ is ESM-only, causes ERR_REQUIRE_ESM in electron-vite CJS main process; electron-conf (by electron-vite author) is the ecosystem-standard replacement
 - 01-01: tsconfig.node.json includes shared/**/* for ipc-types.ts resolution from main and preload contexts
 - 01-01: electron.vite.config.ts uses build.externalizeDeps config (not externalizeDepsPlugin — deprecated in electron-vite 5)
@@ -61,7 +62,6 @@ None yet.
 
 ### Blockers/Concerns
 
-- `safeStorage` availability on headless Linux (no libsecret/kwallet) — fallback strategy needed before Phase 2
 - Jellyfin API pagination: always use limit=500 + startIndex loop; default cap of 100 items will truncate large playlists
 
 ## Deferred Items
@@ -75,5 +75,5 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-04-20
-Stopped at: Phase 1 complete and verified — ready for Phase 2 (Jellyfin Connection)
+Stopped at: Phase 2 discussion complete — 02-CONTEXT.md written, ready for /gsd-plan-phase 2
 Resume file: None
