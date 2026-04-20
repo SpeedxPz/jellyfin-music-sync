@@ -129,27 +129,28 @@ export default function PlaylistBrowserScreen() {
           {!loading && !error && visible.length > 0 && (
             <ul>
               {visible.map((playlist) => (
-                <li key={playlist.id}>
-                  <button
-                    type="button"
-                    onClick={() => toggleSelect(playlist.id)}
-                    className="min-h-[44px] flex items-center gap-3 px-4 hover:bg-gray-700 cursor-pointer rounded w-full text-left"
+                // WR-02: <input> is a sibling of <label>, not nested inside <button>.
+                // Selection is driven solely by the checkbox onChange — no double-toggle risk.
+                <li key={playlist.id} className="flex items-center gap-3 px-4 rounded hover:bg-gray-700">
+                  <input
+                    type="checkbox"
+                    id={`pl-${playlist.id}`}
+                    checked={selected.has(playlist.id)}
+                    onChange={() => toggleSelect(playlist.id)}
+                    className="accent-blue-500 w-4 h-4 flex-shrink-0"
+                  />
+                  {/* Label covers name + track count so the full row is clickable */}
+                  <label
+                    htmlFor={`pl-${playlist.id}`}
+                    className="flex-1 flex items-center min-h-[44px] cursor-pointer gap-3"
                   >
-                    {/* Checkbox */}
-                    <input
-                      type="checkbox"
-                      checked={selected.has(playlist.id)}
-                      onChange={() => toggleSelect(playlist.id)}
-                      onClick={(e) => e.stopPropagation()}
-                      className="accent-blue-500 w-4 h-4 flex-shrink-0"
-                    />
                     {/* Playlist name */}
                     <span className="text-sm font-semibold flex-1">{playlist.name}</span>
                     {/* Track count (D-SIZE-EST — track count only, no size in MB) */}
-                    <span className="text-sm text-gray-400 ml-auto">
+                    <span className="text-sm text-gray-400">
                       {playlist.trackCount === 1 ? '1 track' : `${playlist.trackCount} tracks`}
                     </span>
-                  </button>
+                  </label>
                 </li>
               ))}
             </ul>
