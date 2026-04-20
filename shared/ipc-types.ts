@@ -64,7 +64,13 @@ export interface ElectronAPI {
   auth: {
     login(url: string, user: string, pass: string): Promise<AuthResult>
     logout(): Promise<void>
-    getStatus(): Promise<{ connected: boolean; serverName?: string }>
+    getStatus(): Promise<{
+      connected: boolean
+      serverName?: string
+      displayName?: string
+      userId?: string
+      linuxPlaintextWarning?: boolean
+    }>
   }
 
   // ── Phase 3: Sync (stubs — throw 'Not implemented: sync:<method>') ───────
