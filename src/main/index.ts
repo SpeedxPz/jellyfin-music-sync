@@ -1,6 +1,9 @@
 import { app, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { registerSettingsHandlers } from './ipc/settings'
+import { registerStubs } from './ipc/stubs'
+import { log } from './lib/logger'
 
 function createWindow(): BrowserWindow {
   const win = new BrowserWindow({
@@ -39,6 +42,9 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
+  registerSettingsHandlers()
+  registerStubs()
+  log('INFO', 'App started')
   createWindow()
 
   app.on('activate', function () {
