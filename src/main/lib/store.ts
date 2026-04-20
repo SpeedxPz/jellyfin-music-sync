@@ -8,7 +8,6 @@ const schema = {
     lastDestination: { type: 'string' },
     concurrentDownloads: { type: 'number', minimum: 1, maximum: 5 },
   },
-  required: ['lastDestination', 'concurrentDownloads'],
 } as const
 
 const defaults: Settings = {
