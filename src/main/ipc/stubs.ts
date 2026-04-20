@@ -8,10 +8,10 @@ const PHASE2_CHANNELS = [
   'auth:getStatus',
 ]
 
-// Phase 3 channels (implemented in Phase 3)
+// Phase 3 channels (implemented in Phase 3) — sync:cancel excluded because it
+// uses ipcMain.on (fire-and-forget send), not ipcMain.handle (invoke).
 const PHASE3_CHANNELS = [
   'sync:start',
-  'sync:cancel',
   'sync:getPlaylists',
 ]
 
@@ -25,4 +25,11 @@ export function registerStubs(): void {
       throw new Error(`Not implemented: ${channel}`)
     })
   }
+
+  // sync:cancel is fire-and-forget (preload uses ipcRenderer.send, not invoke).
+  // Register with ipcMain.on so messages are not silently dropped.
+  // Phase 3 will replace this stub with the real cancel logic.
+  ipcMain.on('sync:cancel', () => {
+    // stub: no-op until Phase 3
+  })
 }
