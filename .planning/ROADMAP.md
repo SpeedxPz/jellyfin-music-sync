@@ -52,8 +52,8 @@ Plans:
 
 Plans:
 - [x] 02-01-PLAN.md — Install deps, fix ESM build config, extend types/store, create jellyfin.ts SDK wrapper
-- [ ] 02-02-PLAN.md — Main process IPC handlers: auth.ts + playlists.ts, remove Phase 2 stubs, wire index.ts
-- [ ] 02-03-PLAN.md — Renderer: Zustand auth store, LoginScreen, App.tsx screen router
+- [x] 02-02-PLAN.md — Main process IPC handlers: auth.ts + playlists.ts, remove Phase 2 stubs, wire index.ts
+- [x] 02-03-PLAN.md — Renderer: Zustand auth store, LoginScreen, App.tsx screen router
 - [ ] 02-04-PLAN.md — Renderer: PlaylistBrowserScreen with filter, multi-select, logout, Linux warning banner
 
 ### Phase 3: Sync Engine
@@ -88,6 +88,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-04-20 |
-| 2. Jellyfin Connection | 1/4 | In Progress | - |
+| 2. Jellyfin Connection | 3/4 | In Progress|  |
 | 3. Sync Engine | 0/TBD | Not started | - |
 | 4. UI & Feedback | 0/TBD | Not started | - |

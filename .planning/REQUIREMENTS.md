@@ -10,10 +10,10 @@
 
 ### Authentication (AUTH)
 
-- [ ] **AUTH-01**: User can enter a Jellyfin server URL and log in with username and password
-- [ ] **AUTH-02**: App validates server URL is reachable before attempting login
-- [ ] **AUTH-03**: App persists the auth token between restarts using secure storage
-- [ ] **AUTH-04**: User can log out, clearing stored credentials and revoking the server session
+- [x] **AUTH-01**: User can enter a Jellyfin server URL and log in with username and password
+- [x] **AUTH-02**: App validates server URL is reachable before attempting login
+- [x] **AUTH-03**: App persists the auth token between restarts using secure storage
+- [x] **AUTH-04**: User can log out, clearing stored credentials and revoking the server session
 
 ### Library Browsing (LIB)
 
@@ -89,10 +89,10 @@
 | SET-01 | Phase 1: Foundation | Pending |
 | SET-02 | Phase 1: Foundation | Pending |
 | SET-03 | Phase 1: Foundation | Pending |
-| AUTH-01 | Phase 2: Jellyfin Connection | Pending |
-| AUTH-02 | Phase 2: Jellyfin Connection | Pending |
-| AUTH-03 | Phase 2: Jellyfin Connection | Pending |
-| AUTH-04 | Phase 2: Jellyfin Connection | Pending |
+| AUTH-01 | Phase 2: Jellyfin Connection | Complete |
+| AUTH-02 | Phase 2: Jellyfin Connection | Complete |
+| AUTH-03 | Phase 2: Jellyfin Connection | Complete |
+| AUTH-04 | Phase 2: Jellyfin Connection | Complete |
 | LIB-01 | Phase 2: Jellyfin Connection | Pending |
 | LIB-02 | Phase 2: Jellyfin Connection | Pending |
 | LIB-03 | Phase 2: Jellyfin Connection | Pending |
