@@ -3,16 +3,24 @@ import { app } from 'electron'
 import { appendFileSync, mkdirSync } from 'fs'
 import { join } from 'path'
 
-const logDir = app.getPath('logs')
-const logPath = join(logDir, 'app.log')
+// Lazy-initialized: app.getPath('logs') must not be called before app.whenReady().
+// The first call to log() or getLogPath() triggers initialization.
+let _logPath: string | null = null
 
-mkdirSync(logDir, { recursive: true })
+function ensureLogPath(): string {
+  if (!_logPath) {
+    const logDir = app.getPath('logs')
+    mkdirSync(logDir, { recursive: true })
+    _logPath = join(logDir, 'app.log')
+  }
+  return _logPath
+}
 
 export function log(level: 'INFO' | 'WARN' | 'ERROR', message: string): void {
   const line = `[${new Date().toISOString()}] [${level}] ${message}\n`
-  appendFileSync(logPath, line, 'utf-8')
+  appendFileSync(ensureLogPath(), line, 'utf-8')
 }
 
 export function getLogPath(): string {
-  return logPath
+  return ensureLogPath()
 }
