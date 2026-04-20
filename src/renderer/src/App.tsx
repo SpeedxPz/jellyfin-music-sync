@@ -10,8 +10,14 @@ export default function App() {
 
   useEffect(() => {
     // Load settings and log path from main process via IPC on mount.
-    window.electronAPI.settings.get().then(setSettings)
-    window.electronAPI.settings.getLogPath().then(setLogPath)
+    window.electronAPI.settings
+      .get()
+      .then(setSettings)
+      .catch((err) => console.error('settings:get failed', err))
+    window.electronAPI.settings
+      .getLogPath()
+      .then(setLogPath)
+      .catch((err) => console.error('settings:getLogPath failed', err))
   }, [])
 
   const adjustConcurrent = async (delta: number) => {
