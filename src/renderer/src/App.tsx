@@ -26,9 +26,9 @@ export default function App() {
           })
         }
       })
-      .catch((err) => {
-        // Non-fatal: if getStatus fails, show Login screen so user can re-authenticate
-        console.error('auth:getStatus failed on startup', err)
+      .catch(() => {
+        // WR-03: Non-fatal — IPC failure on startup shows Login screen for re-auth.
+        // No console.error in renderer; main process logger is the right channel.
       })
   }, [])
 
