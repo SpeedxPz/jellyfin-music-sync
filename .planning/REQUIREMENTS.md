@@ -17,10 +17,10 @@
 
 ### Library Browsing (LIB)
 
-- [ ] **LIB-01**: User can view all their Jellyfin playlists with track count displayed
+- [x] **LIB-01**: User can view all their Jellyfin playlists with track count displayed
 - [ ] **LIB-02**: App shows estimated total download size per playlist before syncing
-- [ ] **LIB-03**: User can select multiple playlists to sync in a single run
-- [ ] **LIB-04**: User can filter the playlist list by name
+- [x] **LIB-03**: User can select multiple playlists to sync in a single run
+- [x] **LIB-04**: User can filter the playlist list by name
 
 ### Sync Core (SYNC)
 
@@ -93,10 +93,10 @@
 | AUTH-02 | Phase 2: Jellyfin Connection | Complete |
 | AUTH-03 | Phase 2: Jellyfin Connection | Complete |
 | AUTH-04 | Phase 2: Jellyfin Connection | Complete |
-| LIB-01 | Phase 2: Jellyfin Connection | Pending |
-| LIB-02 | Phase 2: Jellyfin Connection | Pending |
-| LIB-03 | Phase 2: Jellyfin Connection | Pending |
-| LIB-04 | Phase 2: Jellyfin Connection | Pending |
+| LIB-01 | Phase 2: Jellyfin Connection | Complete |
+| LIB-02 | Phase 2: Jellyfin Connection | Deferred (v2) |
+| LIB-03 | Phase 2: Jellyfin Connection | Complete |
+| LIB-04 | Phase 2: Jellyfin Connection | Complete |
 | SYNC-01 | Phase 3: Sync Engine | Pending |
 | SYNC-02 | Phase 3: Sync Engine | Pending |
 | SYNC-03 | Phase 3: Sync Engine | Pending |

@@ -12,7 +12,13 @@ A user can plug in a USB drive, select their Jellyfin playlists, hit Sync, and w
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] User can log in with Jellyfin server URL and credentials — Validated in Phase 2: Jellyfin Connection
+- [x] App validates server reachability before login — Validated in Phase 2: Jellyfin Connection
+- [x] Auth token persists across restarts via safeStorage — Validated in Phase 2: Jellyfin Connection
+- [x] User can log out, clearing credentials and revoking session — Validated in Phase 2: Jellyfin Connection
+- [x] User can browse playlists with track counts — Validated in Phase 2: Jellyfin Connection
+- [x] User can filter playlists by name (client-side) — Validated in Phase 2: Jellyfin Connection
+- [x] User can select multiple playlists before syncing — Validated in Phase 2: Jellyfin Connection
 
 ### Active
 
@@ -81,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-19 after initialization*
+*Last updated: 2026-04-21 — Phase 2 complete; auth + playlist browsing validated*
