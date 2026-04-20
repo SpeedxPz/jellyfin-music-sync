@@ -40,8 +40,9 @@ export function registerPlaylistHandlers(): void {
         const items = resp.data.Items ?? []
 
         for (const item of items) {
+          if (!item.Id) continue  // WR-01: skip malformed items with no ID
           results.push({
-            id: item.Id ?? '',
+            id: item.Id,
             name: item.Name ?? '(Unnamed)',
             // ChildCount is the direct child count for playlist items.
             // If ChildCount returns 0 when RecursiveItemCount is correct, swap here.
