@@ -61,6 +61,9 @@ export default function PlaylistBrowserScreen() {
         playlistIds: Array.from(selected),
         destination: '',        // destination is resolved in main process via dialog (D-DEST-PICKER)
         concurrentDownloads: 3, // default; Phase 4 exposes settings UI
+        playlistNames: Object.fromEntries(
+          playlists.filter((p) => selected.has(p.id)).map((p) => [p.id, p.name])
+        ),
       })
     } catch (err) {
       setSyncError((err as Error).message)

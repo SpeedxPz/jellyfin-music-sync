@@ -113,7 +113,7 @@ async function fetchPlaylistTracks(
  */
 function emitProgress(webContents: WebContents, payload: SyncProgress): void {
   if (!webContents.isDestroyed()) {
-    webContents.send('sync:onProgress', payload)
+    webContents.send('sync:progress', payload)
   }
 }
 
