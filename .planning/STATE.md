@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-01-PLAN.md — IPC contracts + main-process changes; typecheck + 49 tests green
-last_updated: "2026-04-21T20:02:15Z"
+stopped_at: Completed 04-02-PLAN.md — syncStore + App.tsx 3-state router; typecheck + 55 tests green
+last_updated: "2026-04-21T20:06:46Z"
 last_activity: 2026-04-21
 progress:
   total_phases: 4
@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-04-19)
 ## Current Position
 
 Phase: 4 of 4 (UI & Feedback) — IN PROGRESS
-Plan: 2 of TBD in current phase (04-01 complete)
-Status: IPC contracts + main-process changes complete — ready for Wave 1b syncStore + renderer screens
+Plan: 3 of TBD in current phase (04-02 complete)
+Status: syncStore + App.tsx 3-state router complete — ready for Wave 1c SyncScreen + SyncSummaryScreen
 Last activity: 2026-04-21
 
 Progress: [█████████░] 95%
@@ -95,6 +95,8 @@ Recent decisions affecting current work:
 - 04-01: destination added to SyncSummary interface — renderer summary screen gets resolved path from sync:complete payload without a separate IPC call
 - 04-01: sync-engine.ts initializes destination in summary object (engine receives opts.destination) — sync.ts summaryWithDest spread kept for explicit documentation
 - 04-01: registerSyncHandlers(win) called after const win = createWindow() — BrowserWindow available for notification click focus handler (Pitfall 2 mitigation)
+- 04-02: destination preserved across reset() — reset() clears phase/canceled/progress/summary but not destination, so summary screen can still reference last sync path
+- 04-02: Stub screens (SyncScreen.tsx, SyncSummaryScreen.tsx) created in 04-02 to keep typecheck passing — replaced wholesale in 04-03
 
 ### Pending Todos
 
@@ -115,5 +117,5 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-04-21
-Stopped at: Completed 04-01-PLAN.md — IPC contracts, preload cleanup fix, shell handler, desktop notification, BrowserWindow wiring; typecheck clean, 49 tests green
-Resume file: .planning/phases/04-ui-feedback/ (04-02 next)
+Stopped at: Completed 04-02-PLAN.md — syncStore Zustand store, App.tsx 3-state router, stub SyncScreen/SyncSummaryScreen; typecheck clean, 55 tests green
+Resume file: .planning/phases/04-ui-feedback/ (04-03 next)
