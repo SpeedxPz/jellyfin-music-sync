@@ -377,6 +377,12 @@ export async function runSync(
   const downloadTasks = toDownload.map((item) => limit(() => downloadOne(item)))
   await Promise.allSettled(downloadTasks)
 
+  // If sync was cancelled, skip writing manifest and M3U8 to avoid persisting
+  // partial state. Orphaned .part files are already cleaned up by downloadOne's catch block.
+  if (signal.aborted) {
+    return { ...summary }
+  }
+
   // ── Step 9: Update manifest.playlists ────────────────────────────────────
   for (const playlistId of playlistIds) {
     const tracks = playlistTracksMap.get(playlistId) ?? []
