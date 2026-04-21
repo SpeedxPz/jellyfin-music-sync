@@ -1,6 +1,7 @@
 // src/renderer/src/screens/PlaylistBrowserScreen.tsx
 import { useEffect, useState } from 'react'
 import { useAuthStore } from '../store/authStore'
+import { useSyncStore } from '../store/syncStore'
 
 interface Playlist {
   id: string
@@ -10,6 +11,7 @@ interface Playlist {
 
 export default function PlaylistBrowserScreen() {
   const { displayName, serverName, linuxPlaintextWarning, clearAuth } = useAuthStore()
+  const { startSync, reset } = useSyncStore()
 
   const [playlists, setPlaylists] = useState<Playlist[]>([])
   const [loading, setLoading] = useState(true)
@@ -18,6 +20,7 @@ export default function PlaylistBrowserScreen() {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [syncing, setSyncing] = useState(false)
   const [syncError, setSyncError] = useState<string | null>(null)
+  const [downloads, setDownloads] = useState(3)
 
   // Fetch playlists on mount (LIB-01)
   useEffect(() => {
@@ -31,6 +34,11 @@ export default function PlaylistBrowserScreen() {
         setError((err as Error).message)
         setLoading(false)
       })
+
+    // D-SETTINGS-CONTROL: read initial concurrentDownloads from settings
+    window.electronAPI.settings.get()
+      .then((s) => setDownloads(s.concurrentDownloads))
+      .catch(() => {})  // non-critical; default 3 used on failure
   }, [])
 
   // Client-side filter (D-FILTER, LIB-04): case-insensitive substring match
@@ -56,16 +64,19 @@ export default function PlaylistBrowserScreen() {
     if (selected.size === 0) return
     setSyncing(true)
     setSyncError(null)
+    startSync('')   // D-SCREEN: transitions App.tsx to SyncScreen; destination resolved by main via dialog
     try {
       await window.electronAPI.sync.start({
         playlistIds: Array.from(selected),
         destination: '',        // destination is resolved in main process via dialog (D-DEST-PICKER)
-        concurrentDownloads: 3, // default; Phase 4 exposes settings UI
+        concurrentDownloads: downloads,   // D-SETTINGS-PASS: replaces hardcoded 3
         playlistNames: Object.fromEntries(
           playlists.filter((p) => selected.has(p.id)).map((p) => [p.id, p.name])
         ),
       })
     } catch (err) {
+      // On error: reset sync state and show inline error
+      reset()
       setSyncError((err as Error).message)
     } finally {
       setSyncing(false)
@@ -92,6 +103,41 @@ export default function PlaylistBrowserScreen() {
       {/* Header bar */}
       <header className="bg-gray-800 border-b border-gray-600 px-6 py-3 flex items-center justify-between">
         <span className="font-semibold">Jellyfin Music Sync</span>
+        {/* D-SETTINGS-CONTROL: inline downloads control — clamped 1–5 */}
+        <div className="flex items-center gap-2 text-sm">
+          <span className="text-gray-400">Downloads:</span>
+          <button
+            type="button"
+            aria-label="Decrease concurrent downloads"
+            onClick={() => {
+              const next = Math.max(1, downloads - 1)
+              setDownloads(next)
+              window.electronAPI.settings.set({ concurrentDownloads: next })
+            }}
+            disabled={downloads <= 1}
+            className={`bg-gray-700 hover:bg-gray-600 text-gray-100 rounded w-6 h-6 flex items-center justify-center text-sm font-semibold ${
+              downloads <= 1 ? 'opacity-40 cursor-not-allowed' : ''
+            }`}
+          >
+            −
+          </button>
+          <span className="font-semibold w-4 text-center">{downloads}</span>
+          <button
+            type="button"
+            aria-label="Increase concurrent downloads"
+            onClick={() => {
+              const next = Math.min(5, downloads + 1)
+              setDownloads(next)
+              window.electronAPI.settings.set({ concurrentDownloads: next })
+            }}
+            disabled={downloads >= 5}
+            className={`bg-gray-700 hover:bg-gray-600 text-gray-100 rounded w-6 h-6 flex items-center justify-center text-sm font-semibold ${
+              downloads >= 5 ? 'opacity-40 cursor-not-allowed' : ''
+            }`}
+          >
+            +
+          </button>
+        </div>
         <button
           type="button"
           onClick={handleLogout}
