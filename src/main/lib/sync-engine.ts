@@ -156,6 +156,7 @@ export async function runSync(
     unchanged: 0,
     failed: 0,
     failures: [],
+    destination,  // resolved sync destination; surfaced in summary screen (POST-03)
   }
 
   // ── Step 1: Orphan scan ──────────────────────────────────────────────────

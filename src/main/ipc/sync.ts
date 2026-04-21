@@ -1,5 +1,6 @@
 // src/main/ipc/sync.ts
-import { ipcMain, dialog } from 'electron'
+import { ipcMain, dialog, Notification } from 'electron'
+import type { BrowserWindow } from 'electron'
 import { runSync } from '../lib/sync-engine'
 import { getApi } from '../lib/jellyfin'
 import { store } from '../lib/store'
@@ -8,7 +9,7 @@ import type { SyncOptions } from '../../../shared/ipc-types'
 // Module-level AbortController — one sync run at a time
 let _abortController: AbortController | null = null
 
-export function registerSyncHandlers(): void {
+export function registerSyncHandlers(mainWindow: BrowserWindow): void {
   // sync:start — opens folder picker, then runs sync
   // D-DEST-PICKER: dialog.showOpenDialog is invoked from main process
   // D-DEST-PREFILL: lastDestination passed as defaultPath
@@ -49,9 +50,26 @@ export function registerSyncHandlers(): void {
         evt.sender,
         _abortController.signal
       )
+      // D-NOTIF: fire only on clean complete — check aborted flag (T-04-03, Pitfall 5)
+      if (!_abortController?.signal.aborted && Notification.isSupported()) {
+        const body =
+          summary.added === 0 && summary.failed === 0
+            ? 'All tracks up to date'
+            : `${summary.added} added, ${summary.failed} failed`
+        const notif = new Notification({ title: 'Sync complete', body })
+        // D-NOTIF-CLICK: focus app window; guard destroyed window (Pitfall 2)
+        notif.on('click', () => {
+          if (mainWindow && !mainWindow.isDestroyed()) mainWindow.focus()
+        })
+        notif.show()
+      }
+
+      // D-SUMMARY-DESTINATION: include resolved destination in payload (Pitfall 3)
+      const summaryWithDest = { ...summary, destination }
+
       // D-PROG-PUSH: send complete event to renderer
       if (!evt.sender.isDestroyed()) {
-        evt.sender.send('sync:complete', summary)
+        evt.sender.send('sync:complete', summaryWithDest)
       }
     } finally {
       _abortController = null
