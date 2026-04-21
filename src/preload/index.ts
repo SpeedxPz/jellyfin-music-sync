@@ -27,9 +27,16 @@ const api: ElectronAPI = {
     getPlaylists: () => ipcRenderer.invoke('sync:getPlaylists'),
   },
 
-  // ── Phase 4: Event subscriptions (stubs — no main handler yet) ───────────
+  // ── Phase 4: Shell (implemented in main/ipc/shell.ts) ─────────────────────
+  shell: {
+    openPath: (path: string) => ipcRenderer.invoke('shell:openPath', path),
+  },
+
+  // ── Phase 4: Event subscriptions ──────────────────────────────────────────
   on: (event, cb) => {
-    ipcRenderer.on(event, (_evt, payload) => cb(payload))
+    const listener = (_evt: unknown, payload: unknown) => cb(payload as never)
+    ipcRenderer.on(event, listener)
+    return () => ipcRenderer.removeListener(event, listener)
   },
 }
 
