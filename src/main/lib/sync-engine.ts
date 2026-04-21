@@ -26,6 +26,8 @@ import type { SyncProgress, SyncSummary } from '../../../shared/ipc-types'
 
 export interface SyncEngineOpts {
   playlistIds: string[]
+  /** Optional map of playlistId → display name for M3U8 filenames and manifest storage. */
+  playlistNames?: Record<string, string>
   destination: string
   concurrentDownloads: number
 }
@@ -146,7 +148,7 @@ export async function runSync(
   webContents: WebContents,
   signal: AbortSignal
 ): Promise<SyncSummary> {
-  const { playlistIds, destination, concurrentDownloads } = opts
+  const { playlistIds, destination, concurrentDownloads, playlistNames = {} } = opts
 
   const summary: SyncSummary = {
     added: 0,
@@ -175,11 +177,14 @@ export async function runSync(
     const tracks = await fetchPlaylistTracks(playlistId, userId)
     playlistTracksMap.set(playlistId, tracks)
 
-    // Derive playlist name from manifest (existing) or use first track's info
-    // We'll update below from Jellyfin's playlist list API if available.
-    // For now, keep existing manifest name or use a placeholder (updated in step 9).
-    const existingName = manifest.playlists[playlistId]?.name
-    playlistNameMap.set(playlistId, existingName ?? playlistId)
+    // Resolve playlist name: caller-supplied name > existing manifest name > raw UUID fallback.
+    // playlistNames is passed from the IPC layer which has access to the display names
+    // returned by getPlaylists(). This prevents the UUID-as-name bug on first sync.
+    const resolvedName =
+      playlistNames[playlistId] ??
+      manifest.playlists[playlistId]?.name ??
+      playlistId
+    playlistNameMap.set(playlistId, resolvedName)
   }
 
   // ── Step 4: Build unified track map ─────────────────────────────────────
@@ -388,12 +393,12 @@ export async function runSync(
     const tracks = playlistTracksMap.get(playlistId) ?? []
     const currentItemIds = tracks.map((t) => t.Id!).filter(Boolean)
 
-    // Preserve playlist name from manifest if we don't have a better source.
-    // The playlist name is not returned by getPlaylistItems — use prior name or ID.
-    const existingName = manifest.playlists[playlistId]?.name ?? playlistId
+    // Use the resolved name from playlistNameMap (caller-supplied > manifest > UUID fallback).
+    // This ensures the display name is persisted on first sync instead of the raw UUID.
+    const resolvedName = playlistNameMap.get(playlistId) ?? playlistId
     manifest.playlists[playlistId] = {
       id: playlistId,
-      name: existingName,
+      name: resolvedName,
       itemIds: currentItemIds,
     }
   }

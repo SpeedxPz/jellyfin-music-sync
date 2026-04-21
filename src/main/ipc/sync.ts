@@ -42,6 +42,7 @@ export function registerSyncHandlers(): void {
       const summary = await runSync(
         {
           playlistIds: opts.playlistIds,
+          playlistNames: opts.playlistNames,
           destination,
           concurrentDownloads: Math.min(5, Math.max(1, opts.concurrentDownloads ?? store.get('concurrentDownloads'))),
         },

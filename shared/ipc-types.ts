@@ -27,6 +27,9 @@ export interface AuthResult {
 
 export interface SyncOptions {
   playlistIds: string[]
+  /** Optional map of playlistId → display name. When provided, names are stored
+   *  in the manifest and used as M3U8 filenames instead of the raw UUID. */
+  playlistNames?: Record<string, string>
   destination: string
   concurrentDownloads: number
 }
