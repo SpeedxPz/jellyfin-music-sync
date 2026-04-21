@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 complete — all 4 plans done; ready for Phase 4
-last_updated: "2026-04-21T03:29:07Z"
-last_activity: 2026-04-21
+stopped_at: Completed 04-00-PLAN.md — Wave 0 test stubs; 49 tests + 10 todos passing
+last_updated: "2026-04-22T02:58:00Z"
+last_activity: 2026-04-22
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 13
-  completed_plans: 12
-  percent: 92
+  completed_plans: 13
+  percent: 93
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-04-19)
 
 ## Current Position
 
-Phase: 3 of 4 (Sync Engine) — COMPLETE
-Plan: 4 of 4 in current phase (03-04 complete)
-Status: Phase 3 complete — ready for Phase 4 (UI & Feedback)
-Last activity: 2026-04-21
+Phase: 4 of 4 (UI & Feedback) — IN PROGRESS
+Plan: 1 of TBD in current phase (04-00 complete)
+Status: Wave 0 test stubs complete — ready for Wave 1a/1b implementation
+Last activity: 2026-04-22
 
 Progress: [█████████░] 92%
 
@@ -90,6 +90,8 @@ Recent decisions affecting current work:
 - 03-04: PHASE3_CHANNELS emptied in stubs.ts — sync channels now owned entirely by sync.ts; no double-handler risk
 - 03-gap: sync:onProgress corrected to sync:progress (matches ipc-types.ts contract; verifier caught mismatch)
 - 03-gap: playlistNames forwarded from renderer via SyncOptions so M3U8 files get display names on first sync
+- 04-00: it.todo() chosen over it.skip() for Wave 0 stubs — todos appear in Vitest output as named contracts, providing clearer intent to subsequent executors
+- 04-00: tests/ipc/ directory created alongside tests/store/ — IPC handler tests structurally separate from lib unit tests, matching src/main/ipc/ vs src/renderer/src/store/ layout
 
 ### Pending Todos
 
@@ -109,6 +111,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-04-21
-Stopped at: Completed 03-04-PLAN.md — IPC wired; sync button live; 49 tests passing; typecheck clean
-Resume file: .planning/phases/04-ui-feedback/ (Phase 4 not yet planned)
+Last session: 2026-04-22
+Stopped at: Completed 04-00-PLAN.md — Wave 0 test stubs; tests/store/syncStore.test.ts (6 todos) + tests/ipc/shell.test.ts (4 todos); 49 tests green
+Resume file: .planning/phases/04-ui-feedback/ (04-01 next)
