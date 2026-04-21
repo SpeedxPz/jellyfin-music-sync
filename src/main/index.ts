@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { registerSettingsHandlers } from './ipc/settings'
 import { registerAuthHandlers } from './ipc/auth'
 import { registerPlaylistHandlers } from './ipc/playlists'
+import { registerSyncHandlers } from './ipc/sync'
 import { registerStubs } from './ipc/stubs'
 import { log } from './lib/logger'
 
@@ -47,7 +48,8 @@ app.whenReady().then(() => {
   registerSettingsHandlers()
   registerAuthHandlers()      // AUTH-01, AUTH-02, AUTH-03, AUTH-04
   registerPlaylistHandlers()  // LIB-01: sync:getPlaylists
-  registerStubs()             // Phase 3 stubs only (Phase 2 channels removed from stubs.ts)
+  registerSyncHandlers()      // SYNC-01 through SYNC-07, M3U8-01 through M3U8-03
+  registerStubs()             // No active stubs — empty placeholder
   log('INFO', 'App started')
   createWindow()
 

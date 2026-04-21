@@ -16,6 +16,8 @@ export default function PlaylistBrowserScreen() {
   const [error, setError] = useState<string | null>(null)
   const [filter, setFilter] = useState('')
   const [selected, setSelected] = useState<Set<string>>(new Set())
+  const [syncing, setSyncing] = useState(false)
+  const [syncError, setSyncError] = useState<string | null>(null)
 
   // Fetch playlists on mount (LIB-01)
   useEffect(() => {
@@ -47,6 +49,24 @@ export default function PlaylistBrowserScreen() {
       }
       return next
     })
+  }
+
+  // Sync handler — opens native folder picker in main process, then runs sync (D-DEST-PICKER)
+  const handleSyncSelected = async () => {
+    if (selected.size === 0) return
+    setSyncing(true)
+    setSyncError(null)
+    try {
+      await window.electronAPI.sync.start({
+        playlistIds: Array.from(selected),
+        destination: '',        // destination is resolved in main process via dialog (D-DEST-PICKER)
+        concurrentDownloads: 3, // default; Phase 4 exposes settings UI
+      })
+    } catch (err) {
+      setSyncError((err as Error).message)
+    } finally {
+      setSyncing(false)
+    }
   }
 
   // Logout handler (AUTH-04, D-UI-LOGOUT)
@@ -162,19 +182,20 @@ export default function PlaylistBrowserScreen() {
           <p className="text-sm text-gray-400">{selectionLabel}</p>
           <button
             type="button"
-            disabled={selectedCount === 0}
+            disabled={selectedCount === 0 || syncing}
             aria-label={selectedCount === 0 ? 'Select at least one playlist to sync' : undefined}
-            onClick={() => {
-              // Phase 3 wires the actual sync action — no-op in Phase 2
-            }}
+            onClick={handleSyncSelected}
             className={`bg-blue-600 text-white font-semibold py-2 w-full rounded transition-colors ${
-              selectedCount === 0
+              selectedCount === 0 || syncing
                 ? 'opacity-40 cursor-not-allowed'
                 : 'hover:bg-blue-700'
             }`}
           >
-            Sync Selected
+            {syncing ? 'Syncing...' : 'Sync Selected'}
           </button>
+          {syncError && (
+            <p className="text-red-400 text-sm">{syncError}</p>
+          )}
         </div>
       </main>
     </div>
