@@ -1,12 +1,9 @@
 // src/main/ipc/stubs.ts
 import { ipcMain } from 'electron'
 
-// Phase 3 channels (implemented in Phase 3)
-// NOTE: sync:getPlaylists is implemented in Phase 2 (src/main/ipc/playlists.ts) — not a stub.
-// sync:cancel is fire-and-forget via ipcMain.on — registered below, not in PHASE3_CHANNELS.
-const PHASE3_CHANNELS = [
-  'sync:start',
-]
+// Phase 3 channels (sync:start, sync:cancel) are now implemented in src/main/ipc/sync.ts.
+// This array is intentionally empty — kept as a placeholder for future stub phases.
+const PHASE3_CHANNELS: string[] = []
 
 export function registerStubs(): void {
   for (const channel of PHASE3_CHANNELS) {
@@ -15,9 +12,5 @@ export function registerStubs(): void {
       throw new Error(`Not implemented: ${channel}`)
     })
   }
-
-  // sync:cancel is fire-and-forget (preload uses ipcRenderer.send, not invoke).
-  ipcMain.on('sync:cancel', () => {
-    // stub: no-op until Phase 3
-  })
+  // sync:cancel no-op removed — real handler in sync.ts uses ipcMain.on('sync:cancel', ...)
 }
