@@ -65,7 +65,13 @@ Plans:
   2. A `.m3u8` file is generated per playlist with relative paths and `#EXTINF` metadata; the file plays on a separate device when the drive is plugged in
   3. A second sync run downloads zero files when nothing has changed; tracks added to a Jellyfin playlist appear on the next run; removed tracks are deleted from the destination
   4. A track present in two playlists exists as one file on disk and is referenced by both M3U8 files
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [x] 03-01-PLAN.md — Install p-limit@3, extend SyncSummary, implement manifest.ts + m3u8.ts + downloader.ts
+- [ ] 03-02-PLAN.md — Wave 0 test scaffolds: manifest.test.ts, m3u8.test.ts, downloader.test.ts
+- [ ] 03-03-PLAN.md — Implement sync-engine.ts (full orchestration pipeline)
+- [ ] 03-04-PLAN.md — Wire IPC: patch stubs.ts, create sync.ts handler, update index.ts + PlaylistBrowserScreen
 
 ### Phase 4: UI & Feedback
 **Goal**: Users see live per-file and overall progress during sync, can cancel cleanly, receive a desktop notification on completion, and can review a full sync summary and error log
@@ -89,5 +95,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-04-20 |
 | 2. Jellyfin Connection | 4/4 | Complete | 2026-04-21 |
-| 3. Sync Engine | 0/TBD | Not started | - |
+| 3. Sync Engine | 1/4 | In progress | - |
 | 4. UI & Feedback | 0/TBD | Not started | - |
