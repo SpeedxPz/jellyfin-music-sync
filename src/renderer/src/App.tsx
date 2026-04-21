@@ -1,15 +1,21 @@
 // src/renderer/src/App.tsx
-// Phase 2: Two-screen auth router.
+// Phase 4: 3-state router (D-SCREEN, D-ROUTER).
 // LoginScreen shown when not authenticated (D-UI-LAYOUT).
-// PlaylistBrowserScreen shown when authenticated.
+// SyncScreen shown when syncPhase='syncing'.
+// SyncSummaryScreen shown when syncPhase='summary'.
+// PlaylistBrowserScreen shown when authenticated and idle.
 // Auth state hydrated from auth:getStatus IPC on mount (AUTH-03 session restore).
 import { useEffect } from 'react'
 import { useAuthStore } from './store/authStore'
+import { useSyncStore } from './store/syncStore'
 import LoginScreen from './screens/LoginScreen'
 import PlaylistBrowserScreen from './screens/PlaylistBrowserScreen'
+import SyncScreen from './screens/SyncScreen'
+import SyncSummaryScreen from './screens/SyncSummaryScreen'
 
 export default function App() {
   const { authenticated, setAuthenticated } = useAuthStore()
+  const syncPhase = useSyncStore((s) => s.syncPhase)
 
   useEffect(() => {
     // Restore session from persisted credentials on startup (AUTH-03).
@@ -32,5 +38,8 @@ export default function App() {
       })
   }, [])
 
-  return authenticated ? <PlaylistBrowserScreen /> : <LoginScreen />
+  if (!authenticated) return <LoginScreen />
+  if (syncPhase === 'syncing') return <SyncScreen />
+  if (syncPhase === 'summary') return <SyncSummaryScreen />
+  return <PlaylistBrowserScreen />
 }
