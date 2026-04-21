@@ -4,3 +4,7 @@ out
 .DS_Store
 .eslintcache
 *.log*
+build/icons/
+build/source-1024.png
+tsconfig.node.tsbuildinfo
+tsconfig.web.tsbuildinfo
