@@ -47,6 +47,8 @@ export interface SyncSummary {
   added: number
   removed: number
   unchanged: number
+  failed: number                                          // tracks that failed to download (D-ERR-SKIP)
+  failures: Array<{ name: string; reason: string }>      // error log for POST-02
 }
 
 export interface ElectronAPI {
