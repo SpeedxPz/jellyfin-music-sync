@@ -36,9 +36,9 @@ export function buildLocalPath(
   name: string,
   container: string
 ): string {
-  const safeArtist = sanitizePathSegment(artist || 'Unknown Artist')
-  const safeAlbum = sanitizePathSegment(album || 'Unknown Album')
-  // trimEnd() before sanitization prevents trailing-space replacement with '_'
+  // trimEnd() before sanitization prevents trailing spaces becoming '_' (FAT32 pitfall #1)
+  const safeArtist = sanitizePathSegment((artist || 'Unknown Artist').trimEnd())
+  const safeAlbum = sanitizePathSegment((album || 'Unknown Album').trimEnd())
   const safeFile = sanitizePathSegment(`${name.trimEnd()}.${container}`)
   return join(destRoot, safeArtist, safeAlbum, safeFile)
 }
