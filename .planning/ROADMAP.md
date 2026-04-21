@@ -96,4 +96,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Foundation | 5/5 | Complete | 2026-04-20 |
 | 2. Jellyfin Connection | 4/4 | Complete | 2026-04-21 |
 | 3. Sync Engine | 4/4 | Complete | 2026-04-21 |
-| 4. UI & Feedback | 1/TBD | In progress | - |
+| 4. UI & Feedback | 2/TBD | In progress | - |
