@@ -69,7 +69,7 @@ Plans:
 
 Plans:
 - [x] 03-01-PLAN.md — Install p-limit@3, extend SyncSummary, implement manifest.ts + m3u8.ts + downloader.ts
-- [ ] 03-02-PLAN.md — Wave 0 test scaffolds: manifest.test.ts, m3u8.test.ts, downloader.test.ts
+- [x] 03-02-PLAN.md — Wave 0 test scaffolds: manifest.test.ts, m3u8.test.ts, downloader.test.ts
 - [ ] 03-03-PLAN.md — Implement sync-engine.ts (full orchestration pipeline)
 - [ ] 03-04-PLAN.md — Wire IPC: patch stubs.ts, create sync.ts handler, update index.ts + PlaylistBrowserScreen
 
@@ -95,5 +95,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-04-20 |
 | 2. Jellyfin Connection | 4/4 | Complete | 2026-04-21 |
-| 3. Sync Engine | 1/4 | In progress | - |
+| 3. Sync Engine | 2/4 | In progress | - |
 | 4. UI & Feedback | 0/TBD | Not started | - |
