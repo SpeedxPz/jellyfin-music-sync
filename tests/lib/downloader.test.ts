@@ -1,9 +1,17 @@
 // tests/lib/downloader.test.ts
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { mkdtempSync, rmSync, existsSync, readFileSync } from 'fs'
+import { mkdtempSync, rmSync, existsSync } from 'fs'
 import { join } from 'path'
 import { tmpdir } from 'os'
+import { Readable } from 'stream'
 import { buildDownloadUrl, buildLocalPath, downloadTrack } from '../../src/main/lib/downloader'
+
+// Module-level mock resolver: replaced per-test via axiosMockImpl
+let axiosMockImpl: () => Promise<unknown> = () => Promise.reject(new Error('axios not configured'))
+
+vi.mock('axios', () => ({
+  default: (...args: unknown[]) => axiosMockImpl(),
+}))
 
 describe('buildDownloadUrl', () => {
   it('builds correct URL with ?static=true', () => {
@@ -30,11 +38,11 @@ describe('buildDownloadUrl', () => {
 })
 
 describe('buildLocalPath', () => {
-  const destRoot = '/music'
+  // Use a real tmpdir-based root so join() produces a valid OS-native absolute path
+  const destRoot = join(tmpdir(), 'jms-buildpath-test')
 
   it('constructs path with sanitized artist/album/filename segments', () => {
     const result = buildLocalPath(destRoot, 'AC/DC', 'Back in Black', 'Highway to Hell', 'flac')
-    // AC/DC sanitized to AC_DC; path segments joined with OS sep
     expect(result).toContain('AC_DC')
     expect(result).toContain('Back in Black')
     expect(result).toContain('Highway to Hell.flac')
@@ -52,7 +60,6 @@ describe('buildLocalPath', () => {
 
   it('trims trailing spaces from name before adding extension', () => {
     const result = buildLocalPath(destRoot, 'Artist', 'Album', 'Track   ', 'flac')
-    // Should not contain trailing spaces before .flac
     expect(result).toContain('Track.flac')
     expect(result).not.toContain('Track   .flac')
   })
@@ -72,30 +79,23 @@ describe('downloadTrack', () => {
 
   afterEach(() => {
     rmSync(tmpDir, { recursive: true, force: true })
-    vi.restoreAllMocks()
   })
 
   it('downloads file to destPath and returns file size', async () => {
-    // Mock axios to return a simple readable stream
-    const { Readable } = await import('stream')
     const content = Buffer.from('fake audio content here')
     const mockStream = Readable.from([content])
 
-    vi.mock('axios', () => ({
-      default: vi.fn().mockResolvedValue({
+    axiosMockImpl = () =>
+      Promise.resolve({
         data: mockStream,
         headers: { 'content-length': String(content.length) },
-      }),
-    }))
-
-    const axios = (await import('axios')).default as ReturnType<typeof vi.fn>
+      })
 
     const destPath = join(tmpDir, 'Artist', 'Album', 'Track.flac')
     const signal = new AbortController().signal
     const chunks: Array<{ received: number; total: number }> = []
 
-    const { downloadTrack: dl } = await import('../../src/main/lib/downloader')
-    const size = await dl(
+    const size = await downloadTrack(
       'https://jellyfin.example.com/Audio/abc/stream?static=true',
       'MediaBrowser Token="abc"',
       destPath,
@@ -110,31 +110,25 @@ describe('downloadTrack', () => {
   })
 
   it('deletes .part file on download error', async () => {
-    const { Readable } = await import('stream')
-
-    // Stream that errors mid-way
     const errorStream = new Readable({
       read() {
         this.emit('error', new Error('network error'))
       },
     })
 
-    vi.mock('axios', () => ({
-      default: vi.fn().mockResolvedValue({
+    axiosMockImpl = () =>
+      Promise.resolve({
         data: errorStream,
         headers: {},
-      }),
-    }))
+      })
 
     const destPath = join(tmpDir, 'Artist', 'Album', 'Track.flac')
     const signal = new AbortController().signal
 
-    const { downloadTrack: dl } = await import('../../src/main/lib/downloader')
     await expect(
-      dl('https://example.com', 'Token="x"', destPath, signal, () => {})
+      downloadTrack('https://example.com', 'Token="x"', destPath, signal, () => {})
     ).rejects.toThrow()
 
-    // .part file must be cleaned up
     expect(existsSync(`${destPath}.part`)).toBe(false)
   })
 })

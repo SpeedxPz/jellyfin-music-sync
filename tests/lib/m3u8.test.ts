@@ -15,12 +15,12 @@ const playlist: ManifestPlaylist = {
 const itemsMap: Record<string, M3u8ItemMeta> = {
   'item-1': {
     localPath: 'Artist A/Album X/01 - Track One.flac',
-    runTimeTicks: 180_000_000_00, // 180 seconds = 3 min
+    runTimeTicks: 1_800_000_000, // 180 seconds = 3 min (1s = 10_000_000 ticks)
     name: 'Track One',
   },
   'item-2': {
     localPath: 'Artist B/Album Y/02 - Track Two.mp3',
-    runTimeTicks: 240_000_000_00, // 240 seconds = 4 min
+    runTimeTicks: 2_400_000_000, // 240 seconds = 4 min
     name: 'Track Two',
   },
   // item-3 intentionally omitted (simulates failed download)
@@ -60,7 +60,7 @@ describe('generateM3u8', () => {
     const items: Record<string, M3u8ItemMeta> = {
       'item-x': {
         localPath: 'A/B/Track.flac',
-        runTimeTicks: 185_500_000_0, // 18.55 seconds → rounds to 19
+        runTimeTicks: 185_500_000, // 18.55 seconds → rounds to 19
         name: 'Track X',
       },
     }
