@@ -270,9 +270,10 @@ export async function runSync(
 
   const api = getApi()
   if (!api) throw new Error('Not authenticated. Please log in first.')
-  const authHeader = api.accessToken
-    ? `MediaBrowser Token="${api.accessToken}"`
-    : (api as unknown as { authorizationHeader: string }).authorizationHeader
+  // Always use the SDK's authorizationHeader — it includes all required Jellyfin fields:
+  // MediaBrowser Client="...", Device="...", DeviceId="...", Version="...", Token="..."
+  // The manual `MediaBrowser Token="..."` branch omitted required fields and was dead code.
+  const authHeader = (api as unknown as { authorizationHeader: string }).authorizationHeader
 
   const totalTracks = toDownload.length
   let completedTracks = 0
