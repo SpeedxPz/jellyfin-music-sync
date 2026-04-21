@@ -88,6 +88,8 @@ Recent decisions affecting current work:
 - 03-04: dialog.showOpenDialog called from main process only; renderer passes destination: '' (ignored by sync.ts handler per D-DEST-PICKER)
 - 03-04: AbortController at module level in sync.ts — one sync at a time; prior controller aborted if new sync:start arrives before prior completes
 - 03-04: PHASE3_CHANNELS emptied in stubs.ts — sync channels now owned entirely by sync.ts; no double-handler risk
+- 03-gap: sync:onProgress corrected to sync:progress (matches ipc-types.ts contract; verifier caught mismatch)
+- 03-gap: playlistNames forwarded from renderer via SyncOptions so M3U8 files get display names on first sync
 
 ### Pending Todos
 

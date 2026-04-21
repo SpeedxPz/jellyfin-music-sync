@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Electron scaffold, typed IPC surface, filesystem utilities, and app settings store
 - [x] **Phase 2: Jellyfin Connection** - Auth flow and library browsing wired end-to-end against a real server
-- [ ] **Phase 3: Sync Engine** - Download queue, incremental sync, deduplication, and M3U8 generation
+- [x] **Phase 3: Sync Engine** - Download queue, incremental sync, deduplication, and M3U8 generation
 - [ ] **Phase 4: UI & Feedback** - Wired React UI with live progress, cancel, post-sync summary, and packaged builds
 
 ## Phase Details
