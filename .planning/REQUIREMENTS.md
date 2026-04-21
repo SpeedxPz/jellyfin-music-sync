@@ -40,14 +40,14 @@
 
 ### Progress & Control (PROG)
 
-- [ ] **PROG-01**: App shows per-file download progress and overall completion percentage during sync
-- [ ] **PROG-02**: User can cancel an in-progress sync; partial downloads are cleaned up
+- [x] **PROG-01**: App shows per-file download progress and overall completion percentage during sync
+- [x] **PROG-02**: User can cancel an in-progress sync; partial downloads are cleaned up
 
 ### Post-Sync (POST)
 
-- [ ] **POST-01**: App shows a sync summary (counts of added, deleted, skipped, and failed tracks)
-- [ ] **POST-02**: App shows an error log listing tracks that failed to download with the reason
-- [ ] **POST-03**: User can open the destination folder in the OS file explorer from the app
+- [x] **POST-01**: App shows a sync summary (counts of added, deleted, skipped, and failed tracks)
+- [x] **POST-02**: App shows an error log listing tracks that failed to download with the reason
+- [x] **POST-03**: User can open the destination folder in the OS file explorer from the app
 - [ ] **POST-04**: App sends a desktop notification when sync completes
 
 ### Settings (SET)
@@ -107,9 +107,9 @@
 | M3U8-01 | Phase 3: Sync Engine | Pending |
 | M3U8-02 | Phase 3: Sync Engine | Pending |
 | M3U8-03 | Phase 3: Sync Engine | Pending |
-| PROG-01 | Phase 4: UI & Feedback | Pending |
-| PROG-02 | Phase 4: UI & Feedback | Pending |
-| POST-01 | Phase 4: UI & Feedback | Pending |
-| POST-02 | Phase 4: UI & Feedback | Pending |
-| POST-03 | Phase 4: UI & Feedback | Pending |
+| PROG-01 | Phase 4: UI & Feedback | Complete |
+| PROG-02 | Phase 4: UI & Feedback | Complete |
+| POST-01 | Phase 4: UI & Feedback | Complete |
+| POST-02 | Phase 4: UI & Feedback | Complete |
+| POST-03 | Phase 4: UI & Feedback | Complete |
 | POST-04 | Phase 4: UI & Feedback | Pending |
