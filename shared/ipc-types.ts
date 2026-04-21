@@ -52,6 +52,7 @@ export interface SyncSummary {
   unchanged: number
   failed: number                                          // tracks that failed to download (D-ERR-SKIP)
   failures: Array<{ name: string; reason: string }>      // error log for POST-02
+  destination: string   // resolved sync destination; surfaced in summary screen (POST-03, Pitfall 3)
 }
 
 export interface ElectronAPI {
@@ -86,10 +87,16 @@ export interface ElectronAPI {
     getPlaylists(): Promise<Array<{ id: string; name: string; trackCount: number }>>
   }
 
-  // ── Phase 4: Event subscriptions (stubs) ─────────────────────────────────
-  on(event: 'sync:progress', cb: (p: SyncProgress) => void): void
-  on(event: 'sync:complete', cb: (summary: SyncSummary) => void): void
-  on(event: 'sync:error', cb: (err: { message: string }) => void): void
+  // ── Phase 4: Shell (implemented in main/ipc/shell.ts) ────────────────────
+  shell: {
+    /** Opens path in the OS file explorer. Rejects if path is invalid or shell.openPath returns error. */
+    openPath(path: string): Promise<void>
+  }
+
+  // ── Phase 4: Event subscriptions ─────────────────────────────────────────
+  on(event: 'sync:progress', cb: (p: SyncProgress) => void): () => void
+  on(event: 'sync:complete', cb: (summary: SyncSummary) => void): () => void
+  on(event: 'sync:error', cb: (err: { message: string }) => void): () => void
 }
 
 // Augment the global Window interface so renderer code can access
