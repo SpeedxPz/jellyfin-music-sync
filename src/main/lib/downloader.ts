@@ -77,7 +77,7 @@ export async function downloadTrack(
       signal,
     })
 
-    const total = parseInt(response.headers['content-length'] ?? '0', 10)
+    const total = parseInt(String(response.headers['content-length'] ?? '0'), 10)
     let bytesReceived = 0
 
     // PassThrough transform: count bytes without double-consuming the readable
