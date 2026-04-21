@@ -71,7 +71,7 @@ Plans:
 - [x] 03-01-PLAN.md — Install p-limit@3, extend SyncSummary, implement manifest.ts + m3u8.ts + downloader.ts
 - [x] 03-02-PLAN.md — Wave 0 test scaffolds: manifest.test.ts, m3u8.test.ts, downloader.test.ts
 - [x] 03-03-PLAN.md — Implement sync-engine.ts (full orchestration pipeline)
-- [ ] 03-04-PLAN.md — Wire IPC: patch stubs.ts, create sync.ts handler, update index.ts + PlaylistBrowserScreen
+- [x] 03-04-PLAN.md — Wire IPC: patch stubs.ts, create sync.ts handler, update index.ts + PlaylistBrowserScreen
 
 ### Phase 4: UI & Feedback
 **Goal**: Users see live per-file and overall progress during sync, can cancel cleanly, receive a desktop notification on completion, and can review a full sync summary and error log
@@ -95,5 +95,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-04-20 |
 | 2. Jellyfin Connection | 4/4 | Complete | 2026-04-21 |
-| 3. Sync Engine | 3/4 | In progress | - |
+| 3. Sync Engine | 4/4 | Complete | 2026-04-21 |
 | 4. UI & Feedback | 0/TBD | Not started | - |
