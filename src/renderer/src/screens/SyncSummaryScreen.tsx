@@ -5,13 +5,16 @@ import { useSyncStore } from '../store/syncStore'
 export default function SyncSummaryScreen() {
   const { summary, canceled, reset } = useSyncStore()
   const [showFailures, setShowFailures] = useState(false)
+  const [openError, setOpenError] = useState<string | null>(null)
 
   // Guard: summary should always exist when syncPhase='summary', but handle null defensively
   if (!summary) return null
 
   const handleOpenDestination = () => {
     if (!summary.destination) return
-    window.electronAPI.shell.openPath(summary.destination)
+    window.electronAPI.shell
+      .openPath(summary.destination)
+      .catch((err: Error) => setOpenError(err.message))
   }
 
   return (
@@ -92,6 +95,10 @@ export default function SyncSummaryScreen() {
         >
           Open destination folder
         </button>
+        {/* WR-04: surface shell.openPath rejection (e.g. USB ejected) to the user */}
+        {openError && (
+          <p className="text-red-400 text-sm mt-1">{openError}</p>
+        )}
       </main>
     </div>
   )
