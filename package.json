@@ -1,6 +1,6 @@
 {
   "name": "jellyfin-music-sync",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Sync Jellyfin music playlists to local folder or USB drive",
   "main": "./out/main/index.js",
   "author": "",
