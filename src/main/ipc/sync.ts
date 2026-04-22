@@ -39,10 +39,17 @@ export function registerSyncHandlers(mainWindow: BrowserWindow): void {
     }
     _abortController = new AbortController()
 
+    // CR-02: Validate IPC-supplied playlistIds before iterating — renderer input is untrusted.
+    if (!Array.isArray(opts.playlistIds) || opts.playlistIds.length === 0) {
+      throw new Error('No playlists selected.')
+    }
+    // Sanitize: keep only string elements (drop any non-string values from malformed payload)
+    const safePlaylistIds = opts.playlistIds.filter((id): id is string => typeof id === 'string')
+
     try {
       const summary = await runSync(
         {
-          playlistIds: opts.playlistIds,
+          playlistIds: safePlaylistIds,
           playlistNames: opts.playlistNames,
           destination,
           concurrentDownloads: Math.min(5, Math.max(1, opts.concurrentDownloads ?? store.get('concurrentDownloads'))),
@@ -70,6 +77,13 @@ export function registerSyncHandlers(mainWindow: BrowserWindow): void {
       // D-PROG-PUSH: send complete event to renderer
       if (!evt.sender.isDestroyed()) {
         evt.sender.send('sync:complete', summaryWithDest)
+      }
+    } catch (err: unknown) {
+      // Surface fatal sync errors to the renderer so it can exit the syncing state.
+      // Without this the renderer would stay stuck on SyncScreen indefinitely.
+      const message = err instanceof Error ? err.message : String(err)
+      if (!evt.sender.isDestroyed()) {
+        evt.sender.send('sync:error', { message })
       }
     } finally {
       _abortController = null
