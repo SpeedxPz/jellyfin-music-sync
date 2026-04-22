@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: complete
-stopped_at: Completed 04-04-PLAN.md — Icon assets, build scripts, packaged build human-verified; all 12 smoke test steps passed
-last_updated: "2026-04-22T00:00:00Z"
+status: shipped
+stopped_at: v1.0.0 shipped — release at https://github.com/SpeedxPz/jellyfin-music-sync/releases/tag/v1.0.0
+last_updated: "2026-04-22T02:00:00Z"
 last_activity: 2026-04-22
 progress:
   total_phases: 4
