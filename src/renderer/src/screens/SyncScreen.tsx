@@ -1,5 +1,5 @@
 // src/renderer/src/screens/SyncScreen.tsx
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSyncStore } from '../store/syncStore'
 import { ProgressBar } from '../components/ProgressBar'
 
@@ -7,11 +7,26 @@ export default function SyncScreen() {
   const { progress, updateProgress, setSummary, cancel } = useSyncStore()
   const [stopping, setStopping] = useState(false)
 
+  // Fix: with concurrent downloads, multiple trackIds emit events simultaneously.
+  // Only update the "Now" label when a genuinely new trackId is seen (new download started).
+  // Lock per-file progress to that same track so neither label nor bar flickers.
+  const seenTrackIds = useRef(new Set<string>())
+  const nowTrackId = useRef('')
+  const [nowTrack, setNowTrack] = useState('')
+  const [fileProgress, setFileProgress] = useState({ bytesDownloaded: 0, bytesTotal: 0 })
+
   // D-PROG-EVENTS: subscribe on mount; return cleanup to prevent listener accumulation (Pitfall 1)
-  // T-04-02: on() returns cleanup fn (fixed in plan 04-01)
   useEffect(() => {
     const removeProgress = window.electronAPI.on('sync:progress', (p) => {
       updateProgress(p)
+      if (!seenTrackIds.current.has(p.trackId)) {
+        seenTrackIds.current.add(p.trackId)
+        nowTrackId.current = p.trackId
+        setNowTrack(p.trackName)
+      }
+      if (p.trackId === nowTrackId.current) {
+        setFileProgress({ bytesDownloaded: p.bytesDownloaded, bytesTotal: p.bytesTotal })
+      }
     })
     const removeComplete = window.electronAPI.on('sync:complete', (summary) => {
       setSummary(summary)
@@ -24,22 +39,22 @@ export default function SyncScreen() {
 
   const handleStop = () => {
     setStopping(true)
-    cancel()                                  // D-CANCEL-STATE: set canceled=true in store
-    window.electronAPI.sync.cancel()          // D-CANCEL: fire-and-forget
+    cancel()
+    window.electronAPI.sync.cancel()
   }
 
   // Derived display values
   const overallPct = progress && progress.total > 0
     ? Math.round((progress.current / progress.total) * 100)
     : 0
-  const filePct = progress && progress.bytesTotal > 0
-    ? Math.round((progress.bytesDownloaded / progress.bytesTotal) * 100)
+  const filePct = fileProgress.bytesTotal > 0
+    ? Math.round((fileProgress.bytesDownloaded / fileProgress.bytesTotal) * 100)
     : 0
   const toMB = (n: number) => (n / 1_048_576).toFixed(1)
   const done = progress?.current ?? 0
   const total = progress?.total ?? 0
   const remaining = Math.max(0, total - done)
-  const failed = progress?.status === 'error' ? 1 : 0  // track-level; summary has total failed
+  const failed = progress?.status === 'error' ? 1 : 0
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col">
@@ -81,13 +96,13 @@ export default function SyncScreen() {
             className="text-sm text-gray-400 truncate"
             aria-live="polite"
           >
-            {progress ? `Now: ${progress.trackName}` : 'Now: —'}
+            {nowTrack ? `Now: ${nowTrack}` : 'Now: —'}
           </p>
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-400">File</span>
             <span className="text-sm text-gray-400">
-              {progress
-                ? `${toMB(progress.bytesDownloaded)} / ${toMB(progress.bytesTotal)} MB`
+              {fileProgress.bytesTotal > 0
+                ? `${toMB(fileProgress.bytesDownloaded)} / ${toMB(fileProgress.bytesTotal)} MB`
                 : '0.0 / 0.0 MB'}
             </span>
           </div>
