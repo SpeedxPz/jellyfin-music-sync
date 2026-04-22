@@ -57,7 +57,7 @@ export default function SyncScreen() {
   const failed = progress?.status === 'error' ? 1 : 0
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col">
+    <div className="h-full bg-gray-900 text-gray-100 flex flex-col">
       {/* Header — per UI-SPEC §SyncScreen regions */}
       <header className="bg-gray-800 border-b border-gray-600 px-6 py-3 flex items-center justify-between">
         <span className="font-semibold">Jellyfin Music Sync</span>

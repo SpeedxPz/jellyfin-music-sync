@@ -99,7 +99,7 @@ export default function PlaylistBrowserScreen() {
     selectedCount === 1 ? '1 playlist selected' : `${selectedCount} playlists selected`
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col">
+    <div className="h-full bg-gray-900 text-gray-100 flex flex-col">
       {/* Header bar */}
       <header className="bg-gray-800 border-b border-gray-600 px-6 py-3 flex items-center justify-between">
         <span className="font-semibold">Jellyfin Music Sync</span>
@@ -155,7 +155,7 @@ export default function PlaylistBrowserScreen() {
       )}
 
       {/* Main content */}
-      <main className="flex-1 flex flex-col p-6 gap-4">
+      <main className="flex-1 min-h-0 flex flex-col p-6 gap-4">
         {/* Logged in as */}
         <div className="text-sm text-gray-400">
           <p>Logged in as: {displayName}</p>
@@ -175,7 +175,7 @@ export default function PlaylistBrowserScreen() {
         />
 
         {/* Playlist list area */}
-        <div className="flex-1">
+        <div className="flex-1 min-h-0 overflow-y-auto">
           {loading && (
             <div className="flex items-center gap-3 py-12 justify-center">
               <div className="w-5 h-5 border-2 border-gray-600 border-t-blue-400 rounded-full animate-spin" />
