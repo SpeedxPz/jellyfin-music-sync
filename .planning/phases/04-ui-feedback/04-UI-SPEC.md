@@ -1,7 +1,7 @@
 ---
 phase: 4
 slug: ui-feedback
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-04-21
@@ -125,11 +125,13 @@ Style: Track: bg-gray-700 rounded-full; md=h-2, sm=h-1.5
 
 ### SyncScreen
 ```
+Primary visual anchor: Overall progress bar.
+
 Layout: full-screen flex-col, bg-gray-900
 Regions:
   1. Header (bg-gray-800 border-b border-gray-600 px-6 py-3)
      - Left: "Jellyfin Music Sync" (font-semibold)
-     - Right: Cancel button (text-red-400 hover:text-red-300 text-sm, min-h-[44px] min-w-[44px])
+     - Right: Stop Sync button (text-red-400 hover:text-red-300 text-sm, min-h-[44px] min-w-[44px])
   2. Content (flex-1 flex flex-col p-6 gap-6)
      - Subtitle: "Syncing N playlists • M tracks" (text-sm text-gray-400)
      - Overall progress section:
@@ -188,7 +190,7 @@ Style: − and + buttons: bg-gray-700 hover:bg-gray-600 text-gray-100 rounded w-
 |-------|---------|-----------|
 | Active — no progress yet | `syncState = 'syncing'`, no events received | Show bars at 0%, "Now: —", counters at 0 |
 | Active — downloading | `sync:progress` events arriving | Live update all values |
-| Canceling | User clicked Cancel (before `sync:complete` fires) | Disable Cancel button, label changes to "Canceling…", bars frozen at last value |
+| Stopping | User clicked Stop Sync (before `sync:complete` fires) | Disable Stop Sync button, label changes to "Stopping…", bars frozen at last value |
 | Transitioning to summary | `sync:complete` fires | Unmount SyncScreen, mount SyncSummaryScreen |
 
 ### SyncSummaryScreen states
@@ -207,13 +209,14 @@ Style: − and + buttons: bg-gray-700 hover:bg-gray-600 text-gray-100 rounded w-
 
 | Element | Copy |
 |---------|------|
-| Primary CTA (SyncScreen header) | Cancel |
+| Primary CTA (SyncScreen header) | Stop Sync |
 | Primary CTA (SyncSummaryScreen header) | Back to playlists |
 | Primary action (destination folder) | Open destination folder |
 | SyncScreen subtitle | Syncing {N} playlists • {M} tracks |
 | SyncScreen track label | Now: {artist} — {trackName} |
 | SyncScreen counter row | ✔ {N} done  •  ⧖ {N} remaining  •  ✖ {N} failed |
 | SyncScreen — no progress yet track label | Now: — |
+| SyncScreen — stop in progress button label | Stopping… |
 | SyncSummaryScreen heading (complete) | Sync Complete |
 | SyncSummaryScreen heading (canceled) | Sync Canceled |
 | SyncSummaryScreen count row: added | ✔  {N} added |
@@ -233,15 +236,15 @@ Style: − and + buttons: bg-gray-700 hover:bg-gray-600 text-gray-100 rounded w-
 
 Source: Directly from `04-CONTEXT.md` §specifics mockups and §decisions (D-NOTIF-CONTENT, D-CANCEL, D-PROG-LAYOUT, D-SUMMARY-LAYOUT, D-SETTINGS-CONTROL). Zero re-asked questions.
 
-Destructive actions in Phase 4: Cancel is the only destructive-adjacent action. Per D-CANCEL, no confirmation dialog is shown — the user clicks Cancel and the sync stops. The summary screen then shows partial results under "Sync Canceled" heading. This is by design (fire-and-forget cancel).
+Destructive actions in Phase 4: Stop Sync is the only destructive-adjacent action. Per D-CANCEL, no confirmation dialog is shown — the user clicks Stop Sync and the sync stops. The summary screen then shows partial results under "Sync Canceled" heading. This is by design (fire-and-forget cancel). Note: D-CANCEL locks the behavior (no confirmation dialog), not the button label.
 
 ---
 
 ## Interaction Contracts
 
-### Cancel button behavior
+### Stop Sync button behavior
 - Single click fires `window.electronAPI.sync.cancel()` (no confirmation modal).
-- Button immediately enters disabled + "Canceling…" text state.
+- Button immediately enters disabled + "Stopping…" text state.
 - Button re-enables only if the user somehow reaches SyncScreen again (new sync).
 - Source: D-CANCEL.
 
@@ -276,7 +279,7 @@ Destructive actions in Phase 4: Cancel is the only destructive-adjacent action. 
 | Element | Requirement |
 |---------|-------------|
 | Progress bars | `role="progressbar"` + `aria-valuenow` + `aria-valuemin=0` + `aria-valuemax=100` |
-| Cancel button | Minimum 44px touch target (`min-h-[44px] min-w-[44px]`) |
+| Stop Sync button | Minimum 44px touch target (`min-h-[44px] min-w-[44px]`) |
 | Back to playlists button | Minimum 44px touch target |
 | Downloads − and + buttons | `aria-label="Decrease concurrent downloads"` / `aria-label="Increase concurrent downloads"` |
 | Failures toggle | `aria-expanded={open}` on toggle button |
@@ -298,11 +301,11 @@ No external component registries. All UI is hand-rolled Tailwind.
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-04-21
