@@ -280,6 +280,12 @@ export async function runSync(
   // MediaBrowser Client="...", Device="...", DeviceId="...", Version="...", Token="..."
   // The manual `MediaBrowser Token="..."` branch omitted required fields and was dead code.
   const authHeader = (api as unknown as { authorizationHeader: string }).authorizationHeader
+  if (!authHeader) {
+    throw new Error(
+      'Jellyfin SDK did not expose authorizationHeader — cannot authenticate downloads. ' +
+      'This is likely an SDK version incompatibility.'
+    )
+  }
 
   const totalTracks = toDownload.length
   let completedTracks = 0
