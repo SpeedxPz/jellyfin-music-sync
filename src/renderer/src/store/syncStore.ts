@@ -11,6 +11,7 @@ interface SyncState {
   progress: SyncProgress | null
   summary: SyncSummary | null
   destination: string          // cached when sync starts; surfaced in summary (D-SUMMARY-DESTINATION)
+  failedCount: number          // WR-01: cumulative failed track count across all progress events
 
   startSync: (destination: string) => void
   updateProgress: (p: SyncProgress) => void
@@ -25,11 +26,16 @@ export const useSyncStore = create<SyncState>()((set) => ({
   progress: null,
   summary: null,
   destination: '',
+  failedCount: 0,
 
   startSync: (destination) =>
-    set({ syncPhase: 'syncing', canceled: false, progress: null, summary: null, destination }),
-  updateProgress: (p) => set({ progress: p }),
+    set({ syncPhase: 'syncing', canceled: false, progress: null, summary: null, destination, failedCount: 0 }),
+  updateProgress: (p) =>
+    set((s) => ({
+      progress: p,
+      failedCount: p.status === 'error' ? s.failedCount + 1 : s.failedCount,
+    })),
   setSummary: (s) => set({ syncPhase: 'summary', summary: s }),
   cancel: () => set({ canceled: true }),
-  reset: () => set({ syncPhase: 'idle', canceled: false, progress: null, summary: null }),
+  reset: () => set({ syncPhase: 'idle', canceled: false, progress: null, summary: null, failedCount: 0 }),
 }))

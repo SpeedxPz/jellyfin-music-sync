@@ -4,7 +4,7 @@ import { useSyncStore } from '../store/syncStore'
 import { ProgressBar } from '../components/ProgressBar'
 
 export default function SyncScreen() {
-  const { progress, updateProgress, setSummary, cancel } = useSyncStore()
+  const { progress, failedCount, updateProgress, setSummary, cancel, reset } = useSyncStore()
   const [stopping, setStopping] = useState(false)
 
   // Fix: with concurrent downloads, multiple trackIds emit events simultaneously.
@@ -31,9 +31,15 @@ export default function SyncScreen() {
     const removeComplete = window.electronAPI.on('sync:complete', (summary) => {
       setSummary(summary)
     })
+    // WR-02: sync:error is declared in ipc-types.ts; subscribe so the renderer exits
+    // the syncing state when the main process emits a fatal error (e.g. auth failure).
+    const removeError = window.electronAPI.on('sync:error', () => {
+      reset()
+    })
     return () => {
       removeProgress()
       removeComplete()
+      removeError()
     }
   }, [])
 
@@ -54,7 +60,6 @@ export default function SyncScreen() {
   const done = progress?.current ?? 0
   const total = progress?.total ?? 0
   const remaining = Math.max(0, total - done)
-  const failed = progress?.status === 'error' ? 1 : 0
 
   return (
     <div className="h-full bg-gray-900 text-gray-100 flex flex-col">
@@ -111,7 +116,7 @@ export default function SyncScreen() {
 
         {/* Counter row — per UI-SPEC Copywriting Contract */}
         <p className="text-sm text-gray-400">
-          ✔ {done} done  •  ⧖ {remaining} remaining  •  ✖ {failed} failed
+          ✔ {done} done  •  ⧖ {remaining} remaining  •  ✖ {failedCount} failed
         </p>
       </main>
     </div>
