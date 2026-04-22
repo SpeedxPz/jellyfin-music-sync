@@ -11,8 +11,10 @@ import { log } from './lib/logger'
 
 function createWindow(): BrowserWindow {
   const win = new BrowserWindow({
-    width: 480,
-    height: 320,
+    width: 900,
+    height: 640,
+    minWidth: 800,
+    minHeight: 560,
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
