@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Electron scaffold, typed IPC surface, filesystem utilities, and app settings store
 - [x] **Phase 2: Jellyfin Connection** - Auth flow and library browsing wired end-to-end against a real server
 - [x] **Phase 3: Sync Engine** - Download queue, incremental sync, deduplication, and M3U8 generation
-- [ ] **Phase 4: UI & Feedback** - Wired React UI with live progress, cancel, post-sync summary, and packaged builds
+- [x] **Phase 4: UI & Feedback** - Wired React UI with live progress, cancel, post-sync summary, and packaged builds
 
 ## Phase Details
 
@@ -83,8 +83,14 @@ Plans:
   3. After sync completes, the app shows counts of added, deleted, skipped, and failed tracks alongside a log of any failures with reasons
   4. A desktop notification fires when sync finishes; user can open the destination folder in the OS file explorer directly from the app
   5. App packages as a working NSIS installer (Windows) and AppImage (Linux)
-**Plans**: TBD
-**UI hint**: yes
+**Plans**: 5 plans (00–04)
+
+Plans:
+- [x] 04-00-PLAN.md — Wave 0 test stubs: useSyncStore + shell:openPath it.todo() contracts
+- [x] 04-01-PLAN.md — Shell handler, SyncSummary destination field, desktop notification wiring
+- [x] 04-02-PLAN.md — Zustand syncStore (RED/GREEN/REFACTOR), 3-state App.tsx router
+- [x] 04-03-PLAN.md — ProgressBar, SyncScreen, SyncSummaryScreen, Downloads concurrents control
+- [x] 04-04-PLAN.md — Icon assets (build/icon.ico + build/icon.png), build:win/build:linux scripts, human-verified packaged build
 
 ## Progress
 
@@ -96,4 +102,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Foundation | 5/5 | Complete | 2026-04-20 |
 | 2. Jellyfin Connection | 4/4 | Complete | 2026-04-21 |
 | 3. Sync Engine | 4/4 | Complete | 2026-04-21 |
-| 4. UI & Feedback | 4/4 | Complete | 2026-04-21 |
+| 4. UI & Feedback | 5/5 | Complete | 2026-04-22 |
