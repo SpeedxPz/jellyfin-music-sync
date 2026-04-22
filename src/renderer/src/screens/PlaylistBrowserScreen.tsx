@@ -105,7 +105,7 @@ export default function PlaylistBrowserScreen() {
         <span className="font-semibold">Jellyfin Music Sync</span>
         {/* D-SETTINGS-CONTROL: inline downloads control — clamped 1–5 */}
         <div className="flex items-center gap-2 text-sm">
-          <span className="text-gray-400">Downloads:</span>
+          <span className="text-gray-400">Download concurrents:</span>
           <button
             type="button"
             aria-label="Decrease concurrent downloads"
